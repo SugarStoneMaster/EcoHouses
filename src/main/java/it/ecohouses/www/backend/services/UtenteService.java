@@ -2,6 +2,7 @@ package it.ecohouses.www.backend.services;
 
 import it.ecohouses.www.backend.model.Utente;
 import it.ecohouses.www.backend.repositories.UtenteRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,16 +22,17 @@ public class UtenteService {
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
-    public Utente RegistrazioneUtente(String nickname, String email, String password, String immagineProfilo, boolean gestore) {
-        if (utenteRepository.existsByEmail(email)) {
-            throw new IllegalArgumentException("L'email è già in uso.");
+    @Transactional
+    public Utente registrazioneUtente(Utente utente) {
+        if (utenteRepository.existsByNickname(utente.getNickname())) {
+            throw new IllegalArgumentException("Nickname già utilizzato.");
         }
-        if (utenteRepository.existsByNickname(nickname)) {
-            throw new IllegalArgumentException("Il nickname è già in uso.");
+        if (utenteRepository.existsByEmail(utente.getEmail())) {
+            throw new IllegalArgumentException("Email già utilizzata.");
         }
 
-        String hashedPassword = passwordEncoder.encode(password);
-        Utente utente = new Utente(nickname, email, hashedPassword, immagineProfilo, gestore);
+        // Criptazione della password
+        utente.setPassword(passwordEncoder.encode(utente.getPassword()));
 
         return utenteRepository.save(utente);
     }
