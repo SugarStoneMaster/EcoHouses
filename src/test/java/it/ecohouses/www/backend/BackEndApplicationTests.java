@@ -1,4 +1,4 @@
-package it.medimate.www.backend;
+package it.ecohouses.www.backend;
 
 import org.springframework.boot.test.context.SpringBootTest;
 
