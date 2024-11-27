@@ -143,6 +143,15 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <configuration>
+                    <enableRulesSummary>false</enableRulesSummary>
+                    <configLocation>src/main/resources/checkstyle.xml</configLocation>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                    <excludes>**/generated/**.java,**/jmh_generated/**.java</excludes>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
