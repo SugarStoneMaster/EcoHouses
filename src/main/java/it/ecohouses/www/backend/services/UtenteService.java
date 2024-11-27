@@ -4,7 +4,6 @@ import it.ecohouses.www.backend.model.Utente;
 import it.ecohouses.www.backend.repositories.UtenteRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +36,7 @@ public class UtenteService {
         return utenteRepository.save(utente);
     }
 
-    public Utente AutenticazioneUtente(String email, String password) {
+    public Utente autenticazioneUtente(String email, String password) {
         Optional<Utente> utenteOpt = utenteRepository.findByEmail(email);
         if (utenteOpt.isPresent()) {
             Utente utente = utenteOpt.get();

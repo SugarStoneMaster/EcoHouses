@@ -154,7 +154,7 @@
                     <enableRulesSummary>false</enableRulesSummary>
                     <configLocation>src/main/resources/checkstyle.xml</configLocation>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                    <excludes>**/generated/**.java,**/jmh_generated/**.java</excludes>
+                    <excludes>/generated/.java,/jmh_generated/.java</excludes>
                 </configuration>
             </plugin>
         </plugins>

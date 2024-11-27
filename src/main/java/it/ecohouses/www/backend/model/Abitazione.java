@@ -51,13 +51,13 @@ public class Abitazione {
     private String comune;
 
     @Column(nullable = false)
-    private float produzioneTotale = 0.0f;
+    private float produzioneTotale;
 
     @Column(nullable = false)
-    private float consumoTotale = 0.0f;
+    private float consumoTotale;
 
     @Column(nullable = false)
-    private int punteggioTotale = 0;
+    private int punteggioTotale;
 
    /* @OneToMany(mappedBy = "abitazione", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ConsumoEnergia> consumiEnergia;
@@ -84,8 +84,12 @@ public class Abitazione {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Abitazione that = (Abitazione) o;
         return Objects.equals(id, that.id);
     }
