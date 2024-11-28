@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DashboardService {
@@ -21,13 +22,13 @@ public class DashboardService {
         this.produzioneEnergiaRepository = produzioneEnergiaRepository;
     }
 
-    public List<ConsumoEnergetico> visualizzaConsumi(Utente Utente, LocalDateTime inizio, LocalDateTime fine) {
-        Abitazione abitazione = abitazioneRepository.findByUtente(Utente).orElseThrow(()->new IllegalArgumentException("Utente non trovato" + Utente.getNickname()));
-        return consumoEnergeticoRepository.findByAbitazione_IdAbitazioneAndDataBetween(abitazione.getIdAbitazione(), inizio, fine);
+    public List<ConsumoEnergetico> visualizzaConsumi(Utente utente, LocalDateTime inizio, LocalDateTime fine) {
+        Optional<Abitazione> abitazione = abitazioneRepository.findByUtente(utente);
+        return consumoEnergeticoRepository.findByAbitazione_IdAbitazioneAndDataBetween(abitazione.get().getIdAbitazione(), inizio, fine);
     }
 
-    public List<ProduzioneEnergia> visualizzaProduzione(Utente Utente, LocalDateTime inizio, LocalDateTime fine) {
-        Abitazione abitazione = abitazioneRepository.findByUtente(Utente).orElseThrow(()->new IllegalArgumentException("Utente non trovato" + Utente.getNickname()));
-        return produzioneEnergiaRepository.findByAbitazione_IdAbitazioneAndDataBetween(abitazione.getIdAbitazione(), inizio, fine);
+    public List<ProduzioneEnergia> visualizzaProduzione(Utente utente, LocalDateTime inizio, LocalDateTime fine) {
+        Optional<Abitazione> abitazione = abitazioneRepository.findByUtente(utente);
+        return produzioneEnergiaRepository.findByAbitazione_IdAbitazioneAndDataBetween(abitazione.get().getIdAbitazione(), inizio, fine);
     }
 }
