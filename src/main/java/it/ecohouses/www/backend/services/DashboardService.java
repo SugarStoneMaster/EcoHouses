@@ -22,12 +22,12 @@ public class DashboardService {
     }
 
     public List<ConsumoEnergetico> visualizzaConsumi(Utente Utente, LocalDateTime inizio, LocalDateTime fine) {
-        Abitazione abitazione = abitazioneRepository.findByUtente(Utente);
+        Abitazione abitazione = abitazioneRepository.findByUtente(Utente).orElseThrow(()->new IllegalArgumentException("Utente non trovato" + Utente.getNickname()));
         return consumoEnergeticoRepository.findByAbitazione_IdAbitazioneAndDataBetween(abitazione.getIdAbitazione(), inizio, fine);
     }
 
     public List<ProduzioneEnergia> visualizzaProduzione(Utente Utente, LocalDateTime inizio, LocalDateTime fine) {
-        Abitazione abitazione = abitazioneRepository.findByUtente(Utente);
+        Abitazione abitazione = abitazioneRepository.findByUtente(Utente).orElseThrow(()->new IllegalArgumentException("Utente non trovato" + Utente.getNickname()));
         return produzioneEnergiaRepository.findByAbitazione_IdAbitazioneAndDataBetween(abitazione.getIdAbitazione(), inizio, fine);
     }
 }

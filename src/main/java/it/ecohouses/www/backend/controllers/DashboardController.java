@@ -2,6 +2,7 @@ package it.ecohouses.www.backend.controllers;
 
 import it.ecohouses.www.backend.model.ConsumoEnergetico;
 import it.ecohouses.www.backend.model.ProduzioneEnergia;
+import it.ecohouses.www.backend.model.Utente;
 import it.ecohouses.www.backend.services.DashboardService;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,16 +19,16 @@ public class DashboardController {
     }
 
     @GetMapping("/consumi")
-    public List<ConsumoEnergetico> getConsumi(@RequestParam Long idUtente,
+    public List<ConsumoEnergetico> getConsumi(@RequestParam Utente Utente,
                                               @RequestParam LocalDateTime inizio,
                                               @RequestParam LocalDateTime fine) {
-        return dashboardService.visualizzaConsumi(idUtente, inizio, fine);
+        return dashboardService.visualizzaConsumi(Utente, inizio, fine);
     }
 
     @GetMapping("/produzione")
-    public List<ProduzioneEnergia> getProduzione(@RequestParam Long idUtente,
+    public List<ProduzioneEnergia> getProduzione(@RequestParam Utente Utente,
                                                  @RequestParam LocalDateTime inizio,
                                                  @RequestParam LocalDateTime fine) {
-        return dashboardService.visualizzaProduzione(idUtente, inizio, fine);
+        return dashboardService.visualizzaProduzione(Utente, inizio, fine);
     }
 }
