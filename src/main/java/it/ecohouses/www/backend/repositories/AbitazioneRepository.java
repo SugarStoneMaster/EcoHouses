@@ -15,6 +15,6 @@ public interface AbitazioneRepository extends JpaRepository<Abitazione, Long> {
     //aggiungere altri metodi
     boolean existsByNomeCasa(String nomeCasa);
     @Query("SELECT a FROM Abitazione a JOIN a.utentiAssociati u WHERE u = :utente")
-    Optional<Abitazione> findByUtente(@Param("utente") Utente Utente);
+    Optional<Abitazione> findByUtente(@Param("utente") Utente utente);
 
 }

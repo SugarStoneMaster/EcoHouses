@@ -13,6 +13,8 @@ public interface UtenteRepository extends JpaRepository<Utente, String> {
     Optional<Utente> findByEmail(String email);
     boolean existsByNickname(String nickname);
     boolean existsByEmail(String email);
-
-
+    // Metodo per verificare se un utente con un determinato nickname è un gestore
+    // Da usare quanod un'azione può essere eseguita solo da un gestore
+    boolean existsByNicknameAndGestoreTrue(String nickname);
 }
+

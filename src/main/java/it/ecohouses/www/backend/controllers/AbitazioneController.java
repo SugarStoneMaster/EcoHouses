@@ -18,9 +18,12 @@ public class AbitazioneController {
     private AbitazioneService abitazioneService;
 
     @PostMapping("/registrazioneAbitazione")
-    public ResponseEntity<Abitazione> registraAbitazione(@Valid @RequestBody Abitazione abitazione) {
+    public ResponseEntity<Abitazione> registraAbitazione(
+            @RequestParam("nickname") String nickname,
+            @Valid @RequestBody Abitazione abitazione) {
         try {
-            Abitazione nuovaAbitazione = abitazioneService.registraAbitazione(abitazione);
+            // Passa nickname e abitazione al servizio
+            Abitazione nuovaAbitazione = abitazioneService.registraAbitazione(abitazione, nickname);
             return new ResponseEntity<>(nuovaAbitazione, HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -34,8 +37,7 @@ public class AbitazioneController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-
-        }
+}
 
 
 

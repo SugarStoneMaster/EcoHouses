@@ -19,16 +19,16 @@ public class DashboardController {
     }
 
     @GetMapping("/consumi")
-    public List<ConsumoEnergetico> getConsumi(@RequestParam Utente Utente,
+    public List<ConsumoEnergetico> getConsumi(@RequestParam Utente utente,
                                               @RequestParam LocalDateTime inizio,
                                               @RequestParam LocalDateTime fine) {
-        return dashboardService.visualizzaConsumi(Utente, inizio, fine);
+        return dashboardService.visualizzaConsumi(utente, inizio, fine);
     }
 
     @GetMapping("/produzione")
-    public List<ProduzioneEnergia> getProduzione(@RequestParam Utente Utente,
+    public List<ProduzioneEnergia> getProduzione(@RequestParam Utente utente,
                                                  @RequestParam LocalDateTime inizio,
                                                  @RequestParam LocalDateTime fine) {
-        return dashboardService.visualizzaProduzione(Utente, inizio, fine);
+        return dashboardService.visualizzaProduzione(utente, inizio, fine);
     }
 }
