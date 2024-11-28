@@ -1,9 +1,12 @@
 package it.ecohouses.www.backend.services;
 
 import it.ecohouses.www.backend.model.Abitazione;
+import it.ecohouses.www.backend.model.Utente;
 import it.ecohouses.www.backend.repositories.AbitazioneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class AbitazioneService {
@@ -20,4 +23,9 @@ public class AbitazioneService {
         // Salva e ritorna l'abitazione
         return abitazioneRepository.save(abitazione);
     }
+
+    public Optional<Abitazione> getAbitazioneByUtente(Utente utente) {
+        return abitazioneRepository.findByUtente(utente);
+    }
+
 }

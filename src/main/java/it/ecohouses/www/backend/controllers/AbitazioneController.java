@@ -1,6 +1,7 @@
 package it.ecohouses.www.backend.controllers;
 
 import it.ecohouses.www.backend.model.Abitazione;
+import it.ecohouses.www.backend.model.Utente;
 import it.ecohouses.www.backend.services.AbitazioneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,4 +26,12 @@ public class AbitazioneController {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping("/find-by-utente")
+    public ResponseEntity<Abitazione> findByUtente(@RequestBody Utente utente) {
+        return abitazioneService.getAbitazioneByUtente(utente)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
 }
