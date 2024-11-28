@@ -18,16 +18,6 @@ public class AbitazioneService {
     @Autowired
     private UtenteRepository utenteRepository;
 
-    public Abitazione registraAbitazione(Abitazione abitazione) {
-        // Controlla se il nome della casa esiste già
-        if (abitazioneRepository.existsByNomeCasa(abitazione.getNomeCasa())) {
-            throw new IllegalArgumentException("Il nome della casa è già in uso");
-        }
-
-        // Salva e ritorna l'abitazione
-        return abitazioneRepository.save(abitazione);
-    }
-
     public Abitazione registraAbitazione(Abitazione abitazione, String nicknameGestore) {
         // Controlla se l'utente è un gestore valido
         if (!utenteRepository.existsByNicknameAndGestoreTrue(nicknameGestore)) {
