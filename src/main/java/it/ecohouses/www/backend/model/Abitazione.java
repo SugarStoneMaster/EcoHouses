@@ -24,7 +24,7 @@ public class Abitazione {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
-    private Long id;
+    private Long idAbitazione;
 
     @NotBlank(message = "Il nome della casa non può essere vuoto")
     @Column(nullable = false, unique = true)
@@ -60,6 +60,12 @@ public class Abitazione {
     @Column(nullable = false)
     private int punteggioTotale;
 
+    @OneToMany(mappedBy = "abitazione", cascade = CascadeType.ALL)
+    private List<ConsumoEnergetico> consumi;
+
+    @OneToMany(mappedBy = "abitazione", cascade = CascadeType.ALL)
+    private List<ProduzioneEnergia> produzioni;
+
     @OneToMany(mappedBy = "abitazione", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Utente> utentiAssociati = new ArrayList<>();
 
@@ -93,18 +99,18 @@ public class Abitazione {
             return false;
         }
         Abitazione that = (Abitazione) o;
-        return Objects.equals(id, that.id);
+        return Objects.equals(idAbitazione, that.idAbitazione);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(idAbitazione);
     }
 
     @Override
     public String toString() {
         return "Abitazione{" +
-                "id=" + id +
+                "id=" + idAbitazione +
                 ", nomeCasa='" + nomeCasa + '\'' +
                 ", immagine='" + immagine + '\'' +
                 ", metratura=" + metratura +
