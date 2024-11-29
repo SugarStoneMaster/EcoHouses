@@ -315,17 +315,16 @@ PODS:
   - React-jsinspector (0.72.7)
   - React-logger (0.72.7):
     - glog
-  - react-native-date-picker (4.4.2):
+  - react-native-date-picker (4.3.3):
     - React-Core
-  - react-native-document-picker (9.3.1):
-    - RCT-Folly (= 2021.07.22.00)
+  - react-native-document-picker (9.1.1):
     - React-Core
   - react-native-encrypted-storage (4.0.3):
     - React-Core
-  - react-native-image-picker (7.2.1):
+  - react-native-image-picker (7.1.0):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
-  - react-native-safe-area-context (4.14.0):
+  - react-native-safe-area-context (4.9.0):
     - React-Core
   - react-native-sqlite-storage (6.0.1):
     - React-Core
@@ -441,18 +440,17 @@ PODS:
     - React-perflogger (= 0.72.7)
   - rn-fetch-blob (0.12.0):
     - React-Core
-  - RNCPicker (2.10.1):
+  - RNCPicker (2.6.1):
     - React-Core
-  - RNGestureHandler (2.21.2):
+  - RNGestureHandler (2.14.0):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
-  - RNScreens (3.35.0):
+  - RNScreens (3.27.0):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
-    - React-RCTImage
-  - RNShare (10.2.1):
+  - RNShare (10.0.2):
     - React-Core
-  - RNVectorIcons (10.2.0):
+  - RNVectorIcons (10.0.3):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
   - SocketRocket (0.6.1)
@@ -648,11 +646,11 @@ SPEC CHECKSUMS:
   React-jsiexecutor: c49502e5d02112247ee4526bc3ccfc891ae3eb9b
   React-jsinspector: 8baadae51f01d867c3921213a25ab78ab4fbcd91
   React-logger: 8edc785c47c8686c7962199a307015e2ce9a0e4f
-  react-native-date-picker: 312c387d2ff873c66c5e4cf78ff6827fa91644e2
-  react-native-document-picker: 52eab29bbc53f45399b475b7a3f4e503260f1134
+  react-native-date-picker: 1d61c76315098a6ad4c643a356f005916c7d4875
+  react-native-document-picker: 3599b238843369026201d2ef466df53f77ae0452
   react-native-encrypted-storage: db300a3f2f0aba1e818417c1c0a6be549038deb7
-  react-native-image-picker: 0a6ab09d098d8727c4aac6aed9e6f7154c5f1811
-  react-native-safe-area-context: 4532f1a0c5d34a46b9324ccaaedcb5582a302b7d
+  react-native-image-picker: 5e076db26cd81660cfb6db5bcf517cfa12054d45
+  react-native-safe-area-context: b97eb6f9e3b7f437806c2ce5983f479f8eb5de4b
   react-native-sqlite-storage: f6d515e1c446d1e6d026aa5352908a25d4de3261
   React-NativeModulesApple: b6868ee904013a7923128892ee4a032498a1024a
   React-perflogger: 31ea61077185eb1428baf60c0db6e2886f141a5a
@@ -672,11 +670,11 @@ SPEC CHECKSUMS:
   React-utils: 56838edeaaf651220d1e53cd0b8934fb8ce68415
   ReactCommon: 5f704096ccf7733b390f59043b6fa9cc180ee4f6
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
-  RNCPicker: 0cbd0461c74ac7c3e47f6ef3a865e598657b7599
-  RNGestureHandler: 0972b77a2cab0f1a61ca1a3ce348a424614f65c2
-  RNScreens: 50ad6e3dbea9023272b3aa753e3ee2720b0c9b8f
-  RNShare: 0fad69ae2d71de9d1f7b9a43acf876886a6cb99c
-  RNVectorIcons: 084d874504f21a5452744e400537eb96b45060b6
+  RNCPicker: b18aaf30df596e9b1738e7c1f9ee55402a229dca
+  RNGestureHandler: 32a01c29ecc9bb0b5bf7bc0a33547f61b4dc2741
+  RNScreens: 3c2d122f5e08c192e254c510b212306da97d2581
+  RNShare: 859ff710211285676b0bcedd156c12437ea1d564
+  RNVectorIcons: 64e6a523ac30a3241efa9baf1ffbcc5e76ff747a
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: 4c3aa327e4a6a23eeacd71f61c81df1bcdf677d5
 
