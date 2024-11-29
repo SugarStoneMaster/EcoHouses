@@ -1,59 +1,43 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import EncryptedStorage from 'react-native-encrypted-storage';
+import React, { useState, useContext } from 'react';
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import MMButton from './MMButton';
-import Colors from '../styling/colors';
-import { styles } from '../styling/loginCSS'; // Stili già forniti in precedenza
+import { styles } from '../styling/loginCSS';
 import UserApi from '../api/UserApi';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import UserContext from '../contexts/UserContext';
-import FontAwesome from 'react-native-vector-icons/FontAwesome'; // Per le icone social
 
 const LoginPage = () => {
-    const [emailOrUsername, setEmailOrUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [isLogError, setLogError] = useState(false);
+    const [emailOrUsername, setEmailOrUsername] = useState('');
+    const [password, setPassword] = useState('');
     const navigation = useNavigation();
-    const userSession = useContext(UserContext);
+    const { setUserSession } = useContext(UserContext); // Assicurati che UserContext sia configurato correttamente
 
+    // Funzione per gestire il login
     const login = async () => {
+        if (!emailOrUsername || !password) {
+            Alert.alert('Errore', 'Inserisci email/username e password.');
+            return;
+        }
+
         try {
-            let res = await UserApi.login(emailOrUsername, password);
-            if (res && res.isSignedIn && userSession) {
-                userSession.setUserSession(res);
+            const res = await UserApi.login(emailOrUsername, password); // Chiamata al metodo UserApi.login
+            if (res && res.isSignedIn) {
+                // @ts-ignore
+                setUserSession?.(res); // Aggiorna la sessione utente, se il contesto è configurato
+                Alert.alert('Successo', 'Accesso effettuato con successo!');
+            } else {
+                Alert.alert('Errore', 'Credenziali non valide. Riprova.');
             }
         } catch (err) {
-            console.log("Errore durante il login: ", err);
-            setLogError(true);
+            console.error('Errore durante il login:', err);
+            Alert.alert('Errore', 'Impossibile completare il login. Riprova.');
         }
     };
 
-    const loginWithGoogle = async () => {
-        // Simulazione autenticazione Google
-        try {
-            Alert.alert("Google Login", "Login tramite Google non ancora implementato.");
-        } catch (err) {
-            console.log("Errore durante il login con Google: ", err);
-        }
-    };
-
-    const loginWithFacebook = async () => {
-        // Simulazione autenticazione Facebook
-        try {
-            Alert.alert("Facebook Login", "Login tramite Facebook non ancora implementato.");
-        } catch (err) {
-            console.log("Errore durante il login con Facebook: ", err);
-        }
-    };
-
-    const loginWithInstagram = async () => {
-        // Simulazione autenticazione Instagram
-        try {
-            Alert.alert("Instagram Login", "Login tramite Instagram non ancora implementato.");
-        } catch (err) {
-            console.log("Errore durante il login con Instagram: ", err);
-        }
-    };
+    // Placeholder per altre modalità di login
+    const loginWithGoogle = () => Alert.alert('Google Login', 'Login tramite Google non ancora implementato.');
+    const loginWithFacebook = () => Alert.alert('Facebook Login', 'Login tramite Facebook non ancora implementato.');
+    const loginWithInstagram = () => Alert.alert('Instagram Login', 'Login tramite Instagram non ancora implementato.');
 
     return (
         <View style={styles.container}>
@@ -66,6 +50,7 @@ const LoginPage = () => {
                     style={styles.inputText}
                     placeholder="Nome utente/Email"
                     placeholderTextColor="grey"
+                    value={emailOrUsername}
                     onChangeText={(value) => setEmailOrUsername(value)}
                 />
             </View>
@@ -78,16 +63,9 @@ const LoginPage = () => {
                     placeholder="Password"
                     placeholderTextColor="grey"
                     secureTextEntry
+                    value={password}
                     onChangeText={(value) => setPassword(value)}
                 />
-            </View>
-
-            {/* Ricordami e Password dimenticata */}
-            <View style={styles.rememberForgotContainer}>
-                <Text style={styles.rememberText}>Ricordami</Text>
-                <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
-                    <Text style={styles.forgotText}>Password dimenticata?</Text>
-                </TouchableOpacity>
             </View>
 
             {/* Pulsante Login */}
@@ -114,11 +92,11 @@ const LoginPage = () => {
             {/* Registrazione */}
             <View style={styles.registerContainer}>
                 <Text style={styles.registerText}>Non sei registrato?</Text>
-                <TouchableOpacity style={styles.registerButton} onPress={() => navigation.navigate("Signup")}>
+                <TouchableOpacity
+                    style={styles.registerButton}
+                    onPress={() => navigation.navigate('Signup')}
+                >
                     <Text style={styles.registerButtonText}>Registrati</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate("Signin")}>
-                    <Text style={styles.signInLink}>sign in</Text>
                 </TouchableOpacity>
             </View>
         </View>
