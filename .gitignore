@@ -152,3 +152,6 @@ yarn.lock
 
 # React Native Debugger settings
 .react-native-debugger/
+
+
+src/front-end/config/apiEndpointConfig.tsx
