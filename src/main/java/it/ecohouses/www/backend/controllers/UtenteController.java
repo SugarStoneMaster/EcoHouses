@@ -35,7 +35,7 @@ public class UtenteController {
     @PostMapping("/autenticazioneUtente")
 public ResponseEntity<Map<String, Object>> autenticazioneUtente(@RequestBody Utente utente) {
     try {
-        Utente utenteAutenticato = utenteService.AutenticazioneUtente(utente.getEmail(), utente.getPassword());
+        Utente utenteAutenticato = utenteService.autenticazioneUtente(utente.getEmail(), utente.getPassword());
         Map<String, Object> response = new HashMap<>();
         response.put("nickname", utenteAutenticato.getNickname());
         response.put("email", utenteAutenticato.getEmail());

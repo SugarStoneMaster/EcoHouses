@@ -38,6 +38,10 @@ public class Utente {
     @Column(nullable = false)
     private boolean gestore;
 
+    @ManyToOne
+    @JoinColumn(name = "abitazione_id") // Chiave esterna
+    private Abitazione abitazione;
+
     public Utente(String nickname, String email, String password, String immagineProfilo, boolean gestore) {
         this.nickname = nickname;
         this.email = email;
@@ -48,8 +52,12 @@ public class Utente {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Utente utente = (Utente) o;
         return Objects.equals(nickname, utente.nickname);
     }

@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,7 +24,7 @@ public class Abitazione {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
-    private Long id;
+    private Long idAbitazione;
 
     @NotBlank(message = "Il nome della casa non può essere vuoto")
     @Column(nullable = false, unique = true)
@@ -51,54 +52,65 @@ public class Abitazione {
     private String comune;
 
     @Column(nullable = false)
-    private float produzioneTotale = 0.0f;
+    private float produzioneTotale;
 
     @Column(nullable = false)
-    private float consumoTotale = 0.0f;
+    private float consumoTotale;
 
     @Column(nullable = false)
-    private int punteggioTotale = 0;
+    private int punteggioTotale;
 
-   /* @OneToMany(mappedBy = "abitazione", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ConsumoEnergia> consumiEnergia;
+    @OneToMany(mappedBy = "abitazione", cascade = CascadeType.ALL)
+    private List<ConsumoEnergetico> consumi;
+
+    @OneToMany(mappedBy = "abitazione", cascade = CascadeType.ALL)
+    private List<ProduzioneEnergia> produzioni;
 
     @OneToMany(mappedBy = "abitazione", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProduzioneEnergia> produzioniEnergia;
+    private List<Utente> utentiAssociati = new ArrayList<>();
 
-    @OneToMany(mappedBy = "abitazione", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<DispositivoIoT> dispositiviIoT; */
-
-    @NotBlank(message = "Il nickname del gestore non può essere vuoto")
-    @Column(name = "gestore_nickname", nullable = false)
-    private String gestoreNickname;
-
-    public Abitazione(String nomeCasa, String immagine, float metratura, String classeEnergetica, int numeroPersone, String comune, String gestoreNickname) {
+    public Abitazione(String nomeCasa, String immagine, float metratura, String classeEnergetica, int numeroPersone, String comune, Utente gestore) {
+        if (gestore == null) {
+            throw new IllegalArgumentException("L'abitazione deve avere un gestore associato.");
+        }
         this.nomeCasa = nomeCasa;
         this.immagine = immagine;
         this.metratura = metratura;
         this.classeEnergetica = classeEnergetica;
         this.numeroPersone = numeroPersone;
         this.comune = comune;
-        this.gestoreNickname = gestoreNickname;
+        utentiAssociati.add(gestore);
+    }
+
+    @PrePersist
+    @PreUpdate
+    private void validateGestore() {
+        if (utentiAssociati.isEmpty()) {
+            throw new IllegalStateException("L'abitazione deve avere almeno un utente associato come gestore.");
+        }
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Abitazione that = (Abitazione) o;
-        return Objects.equals(id, that.id);
+        return Objects.equals(idAbitazione, that.idAbitazione);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(idAbitazione);
     }
 
     @Override
     public String toString() {
         return "Abitazione{" +
-                "id=" + id +
+                "id=" + idAbitazione +
                 ", nomeCasa='" + nomeCasa + '\'' +
                 ", immagine='" + immagine + '\'' +
                 ", metratura=" + metratura +
@@ -108,7 +120,6 @@ public class Abitazione {
                 ", produzioneTotale=" + produzioneTotale +
                 ", consumoTotale=" + consumoTotale +
                 ", punteggioTotale=" + punteggioTotale +
-                ", gestoreNickname='" + gestoreNickname + '\'' +
                 '}';
     }
 }
