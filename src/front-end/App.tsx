@@ -1,23 +1,32 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import SignupPage from './components/SignupPage'; // Importa la SignupPage
+import LoginPage from './components/LoginPage'; // Importa la schermata di login
+import SignupPage from './components/SignupPage'; // Importa la schermata di registrazione
 
 const Stack = createStackNavigator();
 
 function App(): JSX.Element {
-  return (
-      <NavigationContainer>
-        <Stack.Navigator>
-          {/* Rimuovi il resto delle pagine e mantieni solo la SignupPage */}
-          <Stack.Screen
-              name="Signup"
-              component={SignupPage}
-              options={{ headerShown: false }} // Disabilita l'header per questa schermata
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-  );
+    return (
+        <NavigationContainer>
+            <Stack.Navigator initialRouteName="Login">
+                {/* Schermata di Login */}
+                <Stack.Screen
+                    name="Login"
+                    component={LoginPage}
+                    options={{ headerShown: false }} // Disabilita l'header per la schermata di login
+                />
+
+                {/* Schermata di Signup */}
+               <Stack.Screen
+                    name="Signup"
+                    component={SignupPage}
+                    options={{ headerShown: true, title: 'Registrati' }} // Mostra l'header con il titolo "Registrati"
+                />
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
 }
 
 export default App;
+

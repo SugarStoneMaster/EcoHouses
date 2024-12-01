@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { styles } from '../styling/loginCSS';
+import { styles } from '../styling/LoginCSS';
 import UserApi from '../api/UserApi';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import UserContext from '../contexts/UserContext';
