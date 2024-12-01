@@ -1,66 +1,30 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
-import ChartCard from './ChartCard'; // Assicurati di importare la ChartCard correttamente
-import ChartsAPI from '../api/ChartsAPI';
+// src/components/Dashboard.tsx
+
+import React, { useState, useEffect } from 'react';
+import { View, Text } from 'react-native';
+import { fetchChartData } from '../api/ChartsAPI';
+import TimeSelector from './TimeSelector';
+import LineChartCard from './LineChartCard';
+import PieChartCard from './PieChartCard';
 
 const Dashboard: React.FC = () => {
-    const [selectedTime, setSelectedTime] = useState<'giorno' | 'mese' | 'anno'>('giorno');
+    const [selectedTime, setSelectedTime] = useState<string>('day');
+    const [lineChartData, setLineChartData] = useState<any>([]);
+    const [pieChartData, setPieChartData] = useState<any>([]);
 
-    const handleTimeChange = (time: 'giorno' | 'mese' | 'anno') => {
-        setSelectedTime(time);
-    };
-
-    const { lineChart, pieChart } = ChartsAPI.fetchLineChartData(selectedTime);
+    useEffect(() => {
+        const { lineChartData, pieChartData } = fetchChartData(selectedTime);
+        setLineChartData(lineChartData);
+        setPieChartData(pieChartData);
+    }, [selectedTime]);
 
     return (
-        <ScrollView style={styles.container}>
-            <View style={styles.timeButtonsContainer}>
-                <TouchableOpacity style={styles.timeButton} onPress={() => handleTimeChange('giorno')}>
-                    <Text style={styles.timeButtonText}>Giorno</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.timeButton} onPress={() => handleTimeChange('mese')}>
-                    <Text style={styles.timeButtonText}>Mese</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.timeButton} onPress={() => handleTimeChange('anno')}>
-                    <Text style={styles.timeButtonText}>Anno</Text>
-                </TouchableOpacity>
-            </View>
-
-            <ChartCard
-                title="Grafico Linea"
-                imageSource={lineChart}
-                onPress={() => console.log('Visualizza grafico a linee')}
-            />
-
-            <ChartCard
-                title="Grafico a Torta"
-                imageSource={pieChart}
-                onPress={() => console.log('Visualizza grafico a torta')}
-            />
-        </ScrollView>
+        <View style={{ flex: 1, padding: 16, backgroundColor: '#f0f0f0' }}>
+            <TimeSelector selectedTime={selectedTime} setSelectedTime={setSelectedTime} />
+            <LineChartCard data={lineChartData} title="Consumi vs Media" />
+            <PieChartCard data={pieChartData} title="Energia Consuma vs Prodotta" />
+        </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 20,
-        backgroundColor: '#f7f7f7',
-    },
-    timeButtonsContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        marginBottom: 20,
-    },
-    timeButton: {
-        backgroundColor: '#007BFF',
-        padding: 10,
-        borderRadius: 5,
-    },
-    timeButtonText: {
-        color: '#fff',
-        fontWeight: 'bold',
-    },
-});
 
 export default Dashboard;

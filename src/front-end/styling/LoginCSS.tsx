@@ -97,7 +97,7 @@ export const styles = StyleSheet.create({
         marginBottom: 10,
     },
     registerButton: {
-        width: "90%",
+        width: "95%", // Aumenta la larghezza del pulsante "Registrati"
         backgroundColor: "#B3D5F2",
         borderRadius: 15,
         paddingVertical: 12,
