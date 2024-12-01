@@ -17,7 +17,7 @@ public class AbitazioneController {
     @Autowired
     private AbitazioneService abitazioneService;
 
-    @PostMapping("/registrazioneAbitazione")
+    /*@PostMapping("/registrazioneAbitazione")
     public ResponseEntity<Abitazione> registraAbitazione(
             @RequestParam("nickname") String nickname,
             @Valid @RequestBody Abitazione abitazione) {
@@ -28,7 +28,7 @@ public class AbitazioneController {
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
-    }
+    }*/
 
     @GetMapping("/find-by-utente")
     public ResponseEntity<Abitazione> findByUtente(@RequestBody Utente utente) {

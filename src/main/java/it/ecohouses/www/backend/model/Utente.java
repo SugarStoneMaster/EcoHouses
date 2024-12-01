@@ -1,3 +1,4 @@
+
 package it.ecohouses.www.backend.model;
 
 import jakarta.persistence.*;
@@ -39,7 +40,6 @@ public class Utente {
     private boolean gestore;
 
     @ManyToOne
-    @JoinColumn(name = "abitazione_id") // Chiave esterna
     private Abitazione abitazione;
 
     public Utente(String nickname, String email, String password, String immagineProfilo, boolean gestore) {

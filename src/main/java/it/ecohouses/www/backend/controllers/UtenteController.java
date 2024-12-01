@@ -1,14 +1,15 @@
+
 package it.ecohouses.www.backend.controllers;
 
-import it.ecohouses.www.backend.model.Utente;
+import it.ecohouses.www.backend.model.*;
+import it.ecohouses.www.backend.services.AbitazioneService;
 import it.ecohouses.www.backend.services.UtenteService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,31 +18,56 @@ import java.util.Map;
 public class UtenteController {
 
     private final UtenteService utenteService;
+    private final AbitazioneService abitazioneService;
 
-    public UtenteController(UtenteService utenteService) {
+    public UtenteController(UtenteService utenteService, AbitazioneService abitazioneService) {
         this.utenteService = utenteService;
+        this.abitazioneService = abitazioneService;
     }
 
-    @PostMapping("/registrazioneUtente")
-    public ResponseEntity<Utente> registrazioneUtente(@Valid @RequestBody Utente utente) {
+    @PostMapping(value = "/registrazioneUtente", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> registrazioneUtente(
+            @RequestPart("utente") @Valid Utente utente,
+            @RequestPart(value = "abitazione", required = false) Abitazione abitazione) {
+
+        //System.out.println("Utente: " + utente);
+        //System.out.println("Abitazione: " + abitazione);
+
         try {
+            if (utente.isGestore()) {
+                if (abitazione != null) {
+                    Utente nuovoUtente = utenteService.registrazioneUtente(utente);
+                    Abitazione nuovaAbitazione = abitazioneService.registraAbitazione(abitazione, utente.getNickname());
+                    return new ResponseEntity<>(nuovoUtente, HttpStatus.CREATED);
+                } else {
+                    throw new IllegalArgumentException("Il gestore deve inserire un'abitazione.");
+                }
+
+            }
+
             Utente nuovoUtente = utenteService.registrazioneUtente(utente);
             return new ResponseEntity<>(nuovoUtente, HttpStatus.CREATED);
+
         } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Dati invalidi.", HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Errore durante la registrazione.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+
+
+
     @PostMapping("/autenticazioneUtente")
-public ResponseEntity<Map<String, Object>> autenticazioneUtente(@RequestBody Utente utente) {
-    try {
-        Utente utenteAutenticato = utenteService.autenticazioneUtente(utente.getEmail(), utente.getPassword());
-        Map<String, Object> response = new HashMap<>();
-        response.put("nickname", utenteAutenticato.getNickname());
-        response.put("email", utenteAutenticato.getEmail());
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    } catch (IllegalArgumentException e) {
-        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Map<String, Object>> autenticazioneUtente(@RequestBody Utente utente) {
+        try {
+            Utente utenteAutenticato = utenteService.autenticazioneUtente(utente.getEmail(), utente.getPassword());
+            Map<String, Object> response = new HashMap<>();
+            response.put("nickname", utenteAutenticato.getNickname());
+            response.put("email", utenteAutenticato.getEmail());
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 }
