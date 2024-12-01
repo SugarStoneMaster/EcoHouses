@@ -1,3 +1,4 @@
+
 package it.ecohouses.www.backend.controllers;
 
 import it.ecohouses.www.backend.model.*;
@@ -39,7 +40,7 @@ public class UtenteController {
                     Abitazione nuovaAbitazione = abitazioneService.registraAbitazione(abitazione, utente.getNickname());
                     return new ResponseEntity<>(nuovoUtente, HttpStatus.CREATED);
                 } else {
-                   throw new IllegalArgumentException("Il gestore deve inserire un'abitazione.");
+                    throw new IllegalArgumentException("Il gestore deve inserire un'abitazione.");
                 }
 
             }
@@ -58,15 +59,15 @@ public class UtenteController {
 
 
     @PostMapping("/autenticazioneUtente")
-public ResponseEntity<Map<String, Object>> autenticazioneUtente(@RequestBody Utente utente) {
-    try {
-        Utente utenteAutenticato = utenteService.autenticazioneUtente(utente.getEmail(), utente.getPassword());
-        Map<String, Object> response = new HashMap<>();
-        response.put("nickname", utenteAutenticato.getNickname());
-        response.put("email", utenteAutenticato.getEmail());
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    } catch (IllegalArgumentException e) {
-        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Map<String, Object>> autenticazioneUtente(@RequestBody Utente utente) {
+        try {
+            Utente utenteAutenticato = utenteService.autenticazioneUtente(utente.getEmail(), utente.getPassword());
+            Map<String, Object> response = new HashMap<>();
+            response.put("nickname", utenteAutenticato.getNickname());
+            response.put("email", utenteAutenticato.getEmail());
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 }

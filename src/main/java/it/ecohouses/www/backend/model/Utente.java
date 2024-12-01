@@ -1,3 +1,4 @@
+
 package it.ecohouses.www.backend.model;
 
 import jakarta.persistence.*;
