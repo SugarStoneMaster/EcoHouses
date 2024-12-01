@@ -19,10 +19,6 @@ public class AbitazioneService {
     private UtenteRepository utenteRepository;
 
     public Abitazione registraAbitazione(Abitazione abitazione, String nicknameGestore) {
-        // Controlla se l'utente è un gestore valido
-        if (!utenteRepository.existsByNicknameAndGestoreTrue(nicknameGestore)) {
-            throw new IllegalArgumentException("L'utente specificato non è un gestore valido.");
-        }
 
         // Controlla se il nome della casa esiste già
         if (abitazioneRepository.existsByNomeCasa(abitazione.getNomeCasa())) {

@@ -11,7 +11,6 @@ public class ConsumoEnergetico {
     private Long idConsumo;
 
     @ManyToOne
-    @JoinColumn(name = "idAbitazione", nullable = false)
     private Abitazione abitazione;
 
     private double valoreConsumo; // kWh consumati
