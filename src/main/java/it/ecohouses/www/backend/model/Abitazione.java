@@ -23,7 +23,6 @@ public class Abitazione {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, updatable = false)
     private Long idAbitazione;
 
     @NotBlank(message = "Il nome della casa non può essere vuoto")
@@ -51,13 +50,13 @@ public class Abitazione {
     @Column(nullable = false)
     private String comune;
 
-    @Column(nullable = false)
+    @Column
     private float produzioneTotale;
 
-    @Column(nullable = false)
+    @Column
     private float consumoTotale;
 
-    @Column(nullable = false)
+    @Column
     private int punteggioTotale;
 
     @OneToMany(mappedBy = "abitazione", cascade = CascadeType.ALL)

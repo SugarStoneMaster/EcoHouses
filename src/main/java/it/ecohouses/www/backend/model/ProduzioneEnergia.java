@@ -11,7 +11,6 @@ public class ProduzioneEnergia {
     private Long idProduzione;
 
     @ManyToOne
-    @JoinColumn(name = "idAbitazione", nullable = false)
     private Abitazione abitazione;
 
     private double valoreProduzione; // kWh prodotti

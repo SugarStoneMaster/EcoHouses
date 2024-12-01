@@ -100,3 +100,58 @@ yarn-error.log
 
 # testing
 /coverage
+
+# Node.js dependencies
+npm-debug.log*
+*.log
+
+# React Native cache and build files
+*.gradle
+.idea/
+.vscode/
+.expo/
+
+# iOS/Android specific files
+ios/Pods/
+ios/build/
+android/.gradle/
+android/build/
+android/app/build/
+android/app/debug.keystore
+android/local.properties
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+
+# Test coverage
+coverage/
+
+# macOS specific files
+
+# Watchman
+.watchmanconfig
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+
+# Metro bundler cache
+metro-cache/
+
+# Package lock files (optional, depending on your workflow)
+package-lock.json
+yarn.lock
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# React Native Debugger settings
+.react-native-debugger/
+
+
+src/front-end/config/apiEndpointConfig.tsx
