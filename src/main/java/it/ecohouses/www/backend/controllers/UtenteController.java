@@ -1,4 +1,3 @@
-
 package it.ecohouses.www.backend.controllers;
 
 import it.ecohouses.www.backend.model.*;
@@ -25,7 +24,7 @@ public class UtenteController {
         this.abitazioneService = abitazioneService;
     }
 
-    @PostMapping(value = "/registrazioneUtente", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+   /* @PostMapping(value = "/registrazioneUtente", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> registrazioneUtente(
             @RequestPart("utente") @Valid Utente utente,
             @RequestPart(value = "abitazione", required = false) Abitazione abitazione) {
@@ -40,7 +39,7 @@ public class UtenteController {
                     Abitazione nuovaAbitazione = abitazioneService.registraAbitazione(abitazione, utente.getNickname());
                     return new ResponseEntity<>(nuovoUtente, HttpStatus.CREATED);
                 } else {
-                    throw new IllegalArgumentException("Il gestore deve inserire un'abitazione.");
+                   throw new IllegalArgumentException("Il gestore deve inserire un'abitazione.");
                 }
 
             }
@@ -53,9 +52,42 @@ public class UtenteController {
         } catch (Exception e) {
             return new ResponseEntity<>("Errore durante la registrazione.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }*/
+
+    @PostMapping(value = "/registrazioneUtente")
+    public ResponseEntity<?> registrazioneUtente(@RequestBody @Valid Utente utente) {
+        
+        try {
+            if (utente.isGestore()) {
+                if (utente.getAbitazione() != null ) {
+                    // Salva l'abitazione
+                    Abitazione abitazione = utente.getAbitazione();
+                    Abitazione nuovaAbitazione = abitazioneService.registraAbitazione(abitazione, utente.getNickname());
+
+                    // Associa l'abitazione salvata all'utente
+                    utente.setAbitazione(nuovaAbitazione);
+
+                    // Salva l'utente come gestore
+                    Utente nuovoUtente = utenteService.registrazioneGestore(utente);
+
+                    return new ResponseEntity<>(nuovoUtente, HttpStatus.CREATED);
+                } else {
+                    throw new IllegalArgumentException("Il gestore deve inserire un'abitazione.");
+                }
+
+            }
+
+            Utente nuovoUtente = utenteService.registrazioneUtente(utente);
+            return new ResponseEntity<>(nuovoUtente, HttpStatus.CREATED);
+
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>("Dati invalidi.", HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>("Errore durante la registrazione.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-
-
 
 
     @PostMapping("/autenticazioneUtente")

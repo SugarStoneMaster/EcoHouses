@@ -25,15 +25,15 @@ public class PopulatorService {
 
         // Aggiungi un gestore
 
-        Utente gestore = new Utente("Marco", "gestore@example.com", "DPBHTX46A26B064I", "a.jpg", true);
+        /*Utente gestore = new Utente("Marco", "gestore@example.com", "DPBHTX46A26B064I", "a.jpg", true);
         // Aggiungi abitazione
-        /*Abitazione abitazione = new Abitazione("Nome", "c.jpg", 22, "classe1", 4, "Fisciano", gestore);
+        Abitazione abitazione = new Abitazione("Nome", "c.jpg", 22, "classe1", 4, "Fisciano", gestore);
         abitazioneRepository.save(abitazione);
-        gestore.setAbitazione(abitazione);*/
-        utenteRepository.save(gestore);
+        gestore.setAbitazione(abitazione);
+        utenteRepository.save(gestore);*/
 
-        Utente Utente = new Utente("Luca", "utente@example.com", "EPBHTX46A26B064I", "b.jpg", false);
-        utenteRepository.save(Utente);
+        /*Utente Utente = new Utente("Luca", "utente@example.com", "EPBHTX46A26B064I", "b.jpg", false);
+        utenteRepository.save(Utente);*/
 
 
         Utente utente1 = new Utente("Giulia", "utente1@example.com", "FPBHTX46A26B064I", "c.jpg", false);

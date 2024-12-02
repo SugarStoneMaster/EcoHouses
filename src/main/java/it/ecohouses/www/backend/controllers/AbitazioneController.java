@@ -30,12 +30,11 @@ public class AbitazioneController {
         }
     }*/
 
-    @GetMapping("/find-by-utente")
-    public ResponseEntity<Abitazione> findByUtente(@RequestBody Utente utente) {
-        return abitazioneService.getAbitazioneByUtente(utente)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
+   /* @GetMapping("/find-by-abitazione")
+    public ResponseEntity<Abitazione> findByAbitazione(@RequestBody Long idAbitazione) {
+        //da implementare
+
+    }*/
 
 }
 

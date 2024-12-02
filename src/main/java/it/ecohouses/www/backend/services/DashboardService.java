@@ -5,8 +5,10 @@ import it.ecohouses.www.backend.repositories.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class DashboardService {
@@ -22,13 +24,17 @@ public class DashboardService {
         this.produzioneEnergiaRepository = produzioneEnergiaRepository;
     }
 
-    public List<ConsumoEnergetico> visualizzaConsumi(Utente utente, LocalDateTime inizio, LocalDateTime fine) {
-        Optional<Abitazione> abitazione = abitazioneRepository.findByUtente(utente);
-        return consumoEnergeticoRepository.findByAbitazione_IdAbitazioneAndDataBetween(abitazione.get().getIdAbitazione(), inizio, fine);
+    public List<ConsumoEnergetico> visualizzaConsumi(Abitazione abitazione, LocalDateTime inizio, LocalDateTime fine) {
+        List<ConsumoEnergetico> lista_consumi = new ArrayList<>();
+        lista_consumi = abitazioneRepository.findByAbitazione(abitazione.getIdAbitazione()).stream()
+                .filter(consumo -> consumo.getData().isAfter(inizio) && consumo.getData().isBefore(fine))
+                .toList();
+
+        return lista_consumi;
     }
 
-    public List<ProduzioneEnergia> visualizzaProduzione(Utente utente, LocalDateTime inizio, LocalDateTime fine) {
+    /*public List<ProduzioneEnergia> visualizzaProduzione(Utente utente, LocalDateTime inizio, LocalDateTime fine) {
         Optional<Abitazione> abitazione = abitazioneRepository.findByUtente(utente);
         return produzioneEnergiaRepository.findByAbitazione_IdAbitazioneAndDataBetween(abitazione.get().getIdAbitazione(), inizio, fine);
-    }
+    }*/
 }

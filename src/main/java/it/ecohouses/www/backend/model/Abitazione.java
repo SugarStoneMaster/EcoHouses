@@ -59,34 +59,14 @@ public class Abitazione {
     @Column
     private int punteggioTotale;
 
-    @OneToMany(mappedBy = "abitazione", cascade = CascadeType.ALL)
-    private List<ConsumoEnergetico> consumi;
-
-    @OneToMany(mappedBy = "abitazione", cascade = CascadeType.ALL)
-    private List<ProduzioneEnergia> produzioni;
-
-    @OneToMany(mappedBy = "abitazione", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Utente> utentiAssociati = new ArrayList<>();
-
-    public Abitazione(String nomeCasa, String immagine, float metratura, String classeEnergetica, int numeroPersone, String comune, Utente gestore) {
-        if (gestore == null) {
-            throw new IllegalArgumentException("L'abitazione deve avere un gestore associato.");
-        }
+    public Abitazione(String nomeCasa, String immagine, float metratura, String classeEnergetica, int numeroPersone, String comune) {
         this.nomeCasa = nomeCasa;
         this.immagine = immagine;
         this.metratura = metratura;
         this.classeEnergetica = classeEnergetica;
         this.numeroPersone = numeroPersone;
         this.comune = comune;
-        utentiAssociati.add(gestore);
-    }
-
-    @PrePersist
-    @PreUpdate
-    private void validateGestore() {
-        if (utentiAssociati.isEmpty()) {
-            throw new IllegalStateException("L'abitazione deve avere almeno un utente associato come gestore.");
-        }
+        //utentiAssociati.add(gestore);
     }
 
     @Override

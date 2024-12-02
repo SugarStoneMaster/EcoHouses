@@ -1,6 +1,8 @@
 package it.ecohouses.www.backend.services;
 
+import it.ecohouses.www.backend.model.Abitazione;
 import it.ecohouses.www.backend.model.Utente;
+import it.ecohouses.www.backend.repositories.AbitazioneRepository;
 import it.ecohouses.www.backend.repositories.UtenteRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +16,13 @@ public class UtenteService {
 
     private final UtenteRepository utenteRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AbitazioneRepository abitazioneRepository;
 
     @Autowired
-    public UtenteService(UtenteRepository utenteRepository, PasswordEncoder passwordEncoder) {
+    public UtenteService(UtenteRepository utenteRepository, PasswordEncoder passwordEncoder, AbitazioneRepository abitazioneRepository) {
         this.utenteRepository = utenteRepository;
         this.passwordEncoder = passwordEncoder;
+        this.abitazioneRepository = abitazioneRepository;
     }
 
     @Transactional
@@ -34,6 +38,22 @@ public class UtenteService {
         utente.setPassword(passwordEncoder.encode(utente.getPassword()));
 
         return utenteRepository.save(utente);
+    }
+
+    @Transactional
+    public Utente registrazioneGestore(Utente gestore) {
+        if (utenteRepository.existsByNickname(gestore.getNickname())) {
+            throw new IllegalArgumentException("Nickname già utilizzato.");
+        }
+        if (utenteRepository.existsByEmail(gestore.getEmail())) {
+            throw new IllegalArgumentException("Email già utilizzata.");
+        }
+
+        // Criptazione della password
+        gestore.setPassword(passwordEncoder.encode(gestore.getPassword()));
+        System.out.println("Abitazione gestore = " + gestore.getAbitazione());
+        gestore.setAbitazione(gestore.getAbitazione());
+        return utenteRepository.save(gestore);
     }
 
     public Utente autenticazioneUtente(String email, String password) {

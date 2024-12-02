@@ -1,5 +1,6 @@
 package it.ecohouses.www.backend.controllers;
 
+import it.ecohouses.www.backend.model.Abitazione;
 import it.ecohouses.www.backend.model.ConsumoEnergetico;
 import it.ecohouses.www.backend.model.ProduzioneEnergia;
 import it.ecohouses.www.backend.model.Utente;
@@ -19,16 +20,16 @@ public class DashboardController {
     }
 
     @GetMapping("/consumi")
-    public List<ConsumoEnergetico> getConsumi(@RequestParam Utente utente,
+    public List<ConsumoEnergetico> getConsumi(@RequestParam Abitazione abitazione,
                                               @RequestParam LocalDateTime inizio,
                                               @RequestParam LocalDateTime fine) {
-        return dashboardService.visualizzaConsumi(utente, inizio, fine);
+        return dashboardService.visualizzaConsumi(abitazione, inizio, fine);
     }
 
-    @GetMapping("/produzione")
+   /* @GetMapping("/produzione")
     public List<ProduzioneEnergia> getProduzione(@RequestParam Utente utente,
                                                  @RequestParam LocalDateTime inizio,
                                                  @RequestParam LocalDateTime fine) {
         return dashboardService.visualizzaProduzione(utente, inizio, fine);
-    }
+    }*/
 }
