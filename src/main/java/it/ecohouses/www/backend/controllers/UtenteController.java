@@ -91,15 +91,20 @@ public class UtenteController {
 
 
     @PostMapping("/autenticazioneUtente")
-    public ResponseEntity<Map<String, Object>> autenticazioneUtente(@RequestBody Utente utente) {
+    public ResponseEntity<Map<String, Object>> autenticazioneUtente(@RequestBody Map<String, String> loginData) {
         try {
-            Utente utenteAutenticato = utenteService.autenticazioneUtente(utente.getEmail(), utente.getPassword());
+            String identificatore = loginData.get("identificatore");
+            String password = loginData.get("password");
+
+            Utente utenteAutenticato = utenteService.autenticazioneUtente(identificatore, password);
+
             Map<String, Object> response = new HashMap<>();
             response.put("nickname", utenteAutenticato.getNickname());
             response.put("email", utenteAutenticato.getEmail());
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(Map.of("error", e.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
+
 }

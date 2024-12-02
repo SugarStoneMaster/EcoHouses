@@ -56,18 +56,31 @@ public class UtenteService {
         return utenteRepository.save(gestore);
     }
 
-    public Utente autenticazioneUtente(String email, String password) {
-        Optional<Utente> utenteOpt = utenteRepository.findByEmail(email);
+
+    public Utente autenticazioneUtente(String identificatore, String password) {
+        Optional<Utente> utenteOpt;
+
+        // Determina se l'identificatore è un'email o un nickname
+        if (identificatore.contains("@")) {
+            utenteOpt = utenteRepository.findByEmail(identificatore);
+        } else {
+            utenteOpt = utenteRepository.findByNickname(identificatore);
+        }
+
+        // Verifica la presenza dell'utente
         if (utenteOpt.isPresent()) {
             Utente utente = utenteOpt.get();
+
+            // Verifica la password
             if (passwordEncoder.matches(password, utente.getPassword())) {
                 return utente;
             } else {
                 throw new IllegalArgumentException("Password errata.");
             }
         } else {
-            throw new IllegalArgumentException("Utente con questa email non trovato.");
+            throw new IllegalArgumentException("Utente non trovato.");
         }
     }
+
 
 }
