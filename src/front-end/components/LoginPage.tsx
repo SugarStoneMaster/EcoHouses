@@ -34,11 +34,6 @@ const LoginPage = () => {
         }
     };
 
-    // Placeholder per altre modalità di login
-    const loginWithGoogle = () => Alert.alert('Google Login', 'Login tramite Google non ancora implementato.');
-    const loginWithFacebook = () => Alert.alert('Facebook Login', 'Login tramite Facebook non ancora implementato.');
-    const loginWithInstagram = () => Alert.alert('Instagram Login', 'Login tramite Instagram non ancora implementato.');
-
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Benvenuto su EcoHouses!</Text>
@@ -72,22 +67,6 @@ const LoginPage = () => {
             <TouchableOpacity style={styles.loginButton} onPress={login}>
                 <Text style={styles.loginButtonText}>Login</Text>
             </TouchableOpacity>
-
-            {/* Divider */}
-            <Text style={styles.socialLoginText}>Oppure accedi con:</Text>
-
-            {/* Login Social */}
-            <View style={styles.socialIcons}>
-                <TouchableOpacity style={styles.socialIcon} onPress={loginWithGoogle}>
-                    <FontAwesome name="google" size={24} color="black" />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.socialIcon} onPress={loginWithFacebook}>
-                    <FontAwesome name="facebook" size={24} color="black" />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.socialIcon} onPress={loginWithInstagram}>
-                    <FontAwesome name="instagram" size={24} color="black" />
-                </TouchableOpacity>
-            </View>
 
             {/* Registrazione */}
             <View style={styles.registerContainer}>

@@ -32,21 +32,6 @@ export const styles = StyleSheet.create({
         color: "#000000",
         flex: 1,
     },
-    rememberForgotContainer: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        width: "90%",
-        marginBottom: 20,
-    },
-    rememberText: {
-        fontSize: 14,
-        color: "#000000",
-    },
-    forgotText: {
-        fontSize: 14,
-        color: "#6C757D",
-        textDecorationLine: "underline",
-    },
     loginButton: {
         width: "90%",
         backgroundColor: "#B3D5F2",
@@ -64,29 +49,6 @@ export const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "#000000",
     },
-    socialLoginContainer: {
-        width: "90%",
-        marginBottom: 20,
-        alignItems: "center",
-    },
-    socialLoginText: {
-        fontSize: 16,
-        marginBottom: 15,
-        color: "#000000",
-    },
-    socialIcons: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        width: "60%",
-    },
-    socialIcon: {
-        width: 50,
-        height: 50,
-        borderRadius: 25,
-        backgroundColor: "#CFE3CC",
-        justifyContent: "center",
-        alignItems: "center",
-    },
     registerContainer: {
         alignItems: "center",
         marginTop: 30,
@@ -97,7 +59,7 @@ export const styles = StyleSheet.create({
         marginBottom: 10,
     },
     registerButton: {
-        width: "95%", // Aumenta la larghezza del pulsante "Registrati"
+        width: "95%",
         backgroundColor: "#B3D5F2",
         borderRadius: 15,
         paddingVertical: 12,
@@ -112,10 +74,5 @@ export const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: "bold",
         color: "#000000",
-    },
-    signInLink: {
-        fontSize: 14,
-        color: "#A3C8A3",
-        textDecorationLine: "underline",
     },
 });
