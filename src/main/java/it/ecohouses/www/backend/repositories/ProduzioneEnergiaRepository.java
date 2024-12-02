@@ -7,5 +7,5 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ProduzioneEnergiaRepository extends JpaRepository<ProduzioneEnergia, Long> {
-    List<ProduzioneEnergia> findByAbitazione_IdAbitazioneAndDataBetween(Long idAbitazione, LocalDateTime inizio, LocalDateTime fine);
+   // List<ProduzioneEnergia> findByAbitazione_IdAbitazioneAndDataBetween(Long idAbitazione, LocalDateTime inizio, LocalDateTime fine);
 }

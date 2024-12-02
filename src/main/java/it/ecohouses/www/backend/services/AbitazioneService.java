@@ -2,6 +2,7 @@ package it.ecohouses.www.backend.services;
 
 import it.ecohouses.www.backend.model.Abitazione;
 import it.ecohouses.www.backend.model.ConsumoEnergetico;
+import it.ecohouses.www.backend.model.ProduzioneEnergia;
 import it.ecohouses.www.backend.model.Utente;
 import it.ecohouses.www.backend.repositories.AbitazioneRepository;
 import it.ecohouses.www.backend.repositories.UtenteRepository;
@@ -34,8 +35,11 @@ public class AbitazioneService {
     }
 
 
-    public List<ConsumoEnergetico> getAbitazioneByAbitazione(Long idAbitazione) {
-        return abitazioneRepository.findByAbitazione(idAbitazione);
+    public List<ConsumoEnergetico> getAbitazioneByAbitazioneConsumi(Long idAbitazione) {
+        return abitazioneRepository.findByAbitazioneConsumi(idAbitazione);
+    }
+    public List<ProduzioneEnergia> getAbitazioneByAbitazioneProduzione(Long idAbitazione) {
+        return abitazioneRepository.findByAbitazioneProduzione(idAbitazione);
     }
 
 }

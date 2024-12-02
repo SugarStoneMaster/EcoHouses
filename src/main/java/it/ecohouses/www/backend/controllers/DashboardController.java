@@ -26,10 +26,10 @@ public class DashboardController {
         return dashboardService.visualizzaConsumi(abitazione, inizio, fine);
     }
 
-   /* @GetMapping("/produzione")
-    public List<ProduzioneEnergia> getProduzione(@RequestParam Utente utente,
+    @GetMapping("/produzione")
+    public List<ProduzioneEnergia> getProduzione(@RequestParam Abitazione abitazione,
                                                  @RequestParam LocalDateTime inizio,
                                                  @RequestParam LocalDateTime fine) {
-        return dashboardService.visualizzaProduzione(utente, inizio, fine);
-    }*/
+        return dashboardService.visualizzaProduzione(abitazione, inizio, fine);
+    }
 }

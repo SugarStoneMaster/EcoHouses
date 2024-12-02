@@ -26,15 +26,21 @@ public class DashboardService {
 
     public List<ConsumoEnergetico> visualizzaConsumi(Abitazione abitazione, LocalDateTime inizio, LocalDateTime fine) {
         List<ConsumoEnergetico> lista_consumi = new ArrayList<>();
-        lista_consumi = abitazioneRepository.findByAbitazione(abitazione.getIdAbitazione()).stream()
+        lista_consumi = abitazioneRepository.findByAbitazioneConsumi(abitazione.getIdAbitazione()).stream()
                 .filter(consumo -> consumo.getData().isAfter(inizio) && consumo.getData().isBefore(fine))
                 .toList();
 
         return lista_consumi;
     }
 
-    /*public List<ProduzioneEnergia> visualizzaProduzione(Utente utente, LocalDateTime inizio, LocalDateTime fine) {
-        Optional<Abitazione> abitazione = abitazioneRepository.findByUtente(utente);
-        return produzioneEnergiaRepository.findByAbitazione_IdAbitazioneAndDataBetween(abitazione.get().getIdAbitazione(), inizio, fine);
-    }*/
+    public List<ProduzioneEnergia> visualizzaProduzione(Abitazione abitazione, LocalDateTime inizio, LocalDateTime fine) {
+        List<ProduzioneEnergia> lista_produzione = new ArrayList<>();
+        lista_produzione = abitazioneRepository.findByAbitazioneProduzione(abitazione.getIdAbitazione()).stream()
+                .filter(consumo -> consumo.getData().isAfter(inizio) && consumo.getData().isBefore(fine))
+                .toList();
+
+        return lista_produzione;
+
+
+    }
 }
