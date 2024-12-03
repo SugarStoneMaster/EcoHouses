@@ -15,7 +15,7 @@ export const pieChartConfig: PieChartConfig = {
     backgroundColor: '#ffffff',
     color: (opacity = 1) => `rgba(0, 0, 255, ${opacity})`, // Colore della sezione
     labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`, // Colore dinamico delle etichette
-    decimalPlaces: 2,   // Decimali per i valori
+    decimalPlaces: 2, // Decimali per i valori
     style: {
         borderRadius: 16, // Border radius per la torta
     },

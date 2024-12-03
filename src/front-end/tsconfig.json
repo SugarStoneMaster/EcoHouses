@@ -1,9 +1,9 @@
 {
-  "compilerOptions": {
-    "jsx": "react-native",
-    "moduleResolution": "node",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true
-  }
+    "compilerOptions": {
+        "jsx": "react-native",
+        "moduleResolution": "node",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true
+    }
 }

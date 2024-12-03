@@ -25,15 +25,45 @@ export const fetchChartData = (time: string) => {
     const pieChartData = {
         day: [
             { name: 'Consumo', value: 40, color: 'rgba(255, 99, 132, 1)', legendFontColor: '#000', legendFontSize: 15 },
-            { name: 'Prodotto', value: 60, color: 'rgba(75, 192, 192, 1)', legendFontColor: '#000', legendFontSize: 15 },
+            {
+                name: 'Prodotto',
+                value: 60,
+                color: 'rgba(75, 192, 192, 1)',
+                legendFontColor: '#000',
+                legendFontSize: 15,
+            },
         ],
         month: [
-            { name: 'Consumo', value: 1200, color: 'rgba(255, 99, 132, 1)', legendFontColor: '#000', legendFontSize: 15 },
-            { name: 'Prodotto', value: 1300, color: 'rgba(75, 192, 192, 1)', legendFontColor: '#000', legendFontSize: 15 },
+            {
+                name: 'Consumo',
+                value: 1200,
+                color: 'rgba(255, 99, 132, 1)',
+                legendFontColor: '#000',
+                legendFontSize: 15,
+            },
+            {
+                name: 'Prodotto',
+                value: 1300,
+                color: 'rgba(75, 192, 192, 1)',
+                legendFontColor: '#000',
+                legendFontSize: 15,
+            },
         ],
         year: [
-            { name: 'Consumo', value: 5000, color: 'rgba(255, 99, 132, 1)', legendFontColor: '#000', legendFontSize: 15 },
-            { name: 'Prodotto', value: 6000, color: 'rgba(75, 192, 192, 1)', legendFontColor: '#000', legendFontSize: 15 },
+            {
+                name: 'Consumo',
+                value: 5000,
+                color: 'rgba(255, 99, 132, 1)',
+                legendFontColor: '#000',
+                legendFontSize: 15,
+            },
+            {
+                name: 'Prodotto',
+                value: 6000,
+                color: 'rgba(75, 192, 192, 1)',
+                legendFontColor: '#000',
+                legendFontSize: 15,
+            },
         ],
     };
 

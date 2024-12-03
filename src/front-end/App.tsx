@@ -19,7 +19,7 @@ function App(): JSX.Element {
                 />
 
                 {/* Schermata di Signup */}
-               <Stack.Screen
+                <Stack.Screen
                     name="Signup"
                     component={SignupPage}
                     options={{ headerShown: true, title: 'Registrati' }} // Mostra l'header con il titolo "Registrati"
@@ -36,11 +36,9 @@ function App(): JSX.Element {
                         headerTitleStyle: { fontWeight: 'bold' }, // Stile del titolo
                     }}
                 />
-
             </Stack.Navigator>
         </NavigationContainer>
     );
 }
 
 export default App;
-

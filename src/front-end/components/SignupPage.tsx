@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Modal, StyleSheet, Pressable } from 'react-native';
-import CheckBox from "@react-native-community/checkbox";
+import CheckBox from '@react-native-community/checkbox';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SignupPageStyles from '../styling/SignupPageStyles';
 
@@ -65,9 +65,7 @@ const SignupPage = () => {
             password,
             confirmPassword,
             isManager,
-            houseDetails: isManager
-                ? { squareMeters, city, people, energyClass }
-                : null,
+            houseDetails: isManager ? { squareMeters, city, people, energyClass } : null,
         };
 
         console.log('Dati inviati:', requestData);

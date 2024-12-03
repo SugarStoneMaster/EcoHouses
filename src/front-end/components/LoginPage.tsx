@@ -10,7 +10,7 @@ const LoginPage = () => {
     const [emailOrUsername, setEmailOrUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigation = useNavigation();
-    const { setUserSession } = useContext(UserContext); // Assicurati che UserContext sia configurato correttamente
+    const { setUserSession } = useContext(UserContext); // Contesto utente per la sessione
 
     // Funzione per gestire il login
     const login = async () => {
@@ -20,11 +20,12 @@ const LoginPage = () => {
         }
 
         try {
-            const res = await UserApi.login(emailOrUsername, password); // Chiamata al metodo UserApi.login
+            const res = await UserApi.login(emailOrUsername, password);
             if (res && res.isSignedIn) {
-                // @ts-ignore
-                setUserSession?.(res); // Aggiorna la sessione utente, se il contesto è configurato
+                // Aggiorna la sessione utente e naviga alla dashboard
+                setUserSession?.(res);
                 Alert.alert('Successo', 'Accesso effettuato con successo!');
+                navigation.navigate('Dashboard');
             } else {
                 Alert.alert('Errore', 'Credenziali non valide. Riprova.');
             }
@@ -71,10 +72,7 @@ const LoginPage = () => {
             {/* Registrazione */}
             <View style={styles.registerContainer}>
                 <Text style={styles.registerText}>Non sei registrato?</Text>
-                <TouchableOpacity
-                    style={styles.registerButton}
-                    onPress={() => navigation.navigate('Signup')}
-                >
+                <TouchableOpacity style={styles.registerButton} onPress={() => navigation.navigate('Signup')}>
                     <Text style={styles.registerButtonText}>Registrati</Text>
                 </TouchableOpacity>
             </View>

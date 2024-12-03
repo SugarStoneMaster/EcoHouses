@@ -5,8 +5,8 @@ import { chartConfig } from '../styling/DashboardStyle';
 
 // Definiamo un tipo esplicito per i dati del grafico a linee
 interface LineChartData {
-    x: string;  // Data o etichetta dell'asse X
-    y: number;  // Valore dell'asse Y
+    x: string; // Data o etichetta dell'asse X
+    y: number; // Valore dell'asse Y
 }
 
 interface LineChartCardProps {
@@ -16,8 +16,8 @@ interface LineChartCardProps {
 
 const LineChartCard: React.FC<LineChartCardProps> = ({ data, title }) => {
     // Separiamo i dati in due array per X e Y
-    const xValues = data.map(item => item.x);
-    const yValues = data.map(item => item.y);
+    const xValues = data.map((item) => item.x);
+    const yValues = data.map((item) => item.y);
 
     return (
         <View style={{ marginBottom: 20 }}>
