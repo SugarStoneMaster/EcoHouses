@@ -51,7 +51,6 @@ public class UtenteService {
 
         // Criptazione della password
         gestore.setPassword(passwordEncoder.encode(gestore.getPassword()));
-        System.out.println("Abitazione gestore = " + gestore.getAbitazione());
         gestore.setAbitazione(gestore.getAbitazione());
         return utenteRepository.save(gestore);
     }

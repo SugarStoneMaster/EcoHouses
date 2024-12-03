@@ -9,8 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 @Data
@@ -66,7 +64,6 @@ public class Abitazione {
         this.classeEnergetica = classeEnergetica;
         this.numeroPersone = numeroPersone;
         this.comune = comune;
-        //utentiAssociati.add(gestore);
     }
 
     @Override

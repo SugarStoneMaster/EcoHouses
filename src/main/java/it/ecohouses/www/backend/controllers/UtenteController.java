@@ -24,36 +24,6 @@ public class UtenteController {
         this.abitazioneService = abitazioneService;
     }
 
-   /* @PostMapping(value = "/registrazioneUtente", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> registrazioneUtente(
-            @RequestPart("utente") @Valid Utente utente,
-            @RequestPart(value = "abitazione", required = false) Abitazione abitazione) {
-
-        //System.out.println("Utente: " + utente);
-        //System.out.println("Abitazione: " + abitazione);
-
-        try {
-            if (utente.isGestore()) {
-                if (abitazione != null) {
-                    Utente nuovoUtente = utenteService.registrazioneUtente(utente);
-                    Abitazione nuovaAbitazione = abitazioneService.registraAbitazione(abitazione, utente.getNickname());
-                    return new ResponseEntity<>(nuovoUtente, HttpStatus.CREATED);
-                } else {
-                   throw new IllegalArgumentException("Il gestore deve inserire un'abitazione.");
-                }
-
-            }
-
-            Utente nuovoUtente = utenteService.registrazioneUtente(utente);
-            return new ResponseEntity<>(nuovoUtente, HttpStatus.CREATED);
-
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>("Dati invalidi.", HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Errore durante la registrazione.", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }*/
-
     @PostMapping(value = "/registrazioneUtente")
     public ResponseEntity<?> registrazioneUtente(@RequestBody @Valid Utente utente) {
         
