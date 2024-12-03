@@ -1,17 +1,12 @@
 package it.ecohouses.www.backend.services;
 
 import it.ecohouses.www.backend.model.Abitazione;
-import it.ecohouses.www.backend.model.ConsumoEnergetico;
-import it.ecohouses.www.backend.model.ProduzioneEnergia;
-import it.ecohouses.www.backend.model.Utente;
 import it.ecohouses.www.backend.repositories.AbitazioneRepository;
 import it.ecohouses.www.backend.repositories.UtenteRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AbitazioneService {
@@ -23,7 +18,7 @@ public class AbitazioneService {
     private UtenteRepository utenteRepository;
 
     @Transactional
-    public Abitazione registraAbitazione(Abitazione abitazione, String nicknameGestore) {
+    public Abitazione registraAbitazione(Abitazione abitazione) {
 
         // Controlla se il nome della casa esiste già
        if (abitazioneRepository.existsByNomeCasa(abitazione.getNomeCasa())) {
@@ -33,13 +28,4 @@ public class AbitazioneService {
         // Salva e ritorna l'abitazione
         return abitazioneRepository.save(abitazione);
     }
-
-
-    public List<ConsumoEnergetico> getAbitazioneByAbitazioneConsumi(Long idAbitazione) {
-        return abitazioneRepository.findByAbitazioneConsumi(idAbitazione);
-    }
-    public List<ProduzioneEnergia> getAbitazioneByAbitazioneProduzione(Long idAbitazione) {
-        return abitazioneRepository.findByAbitazioneProduzione(idAbitazione);
-    }
-
 }

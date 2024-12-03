@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class DashboardService {
@@ -25,21 +23,21 @@ public class DashboardService {
     }
 
     public List<ConsumoEnergetico> visualizzaConsumi(Abitazione abitazione, LocalDateTime inizio, LocalDateTime fine) {
-        List<ConsumoEnergetico> lista_consumi = new ArrayList<>();
-        lista_consumi = abitazioneRepository.findByAbitazioneConsumi(abitazione.getIdAbitazione()).stream()
+        List<ConsumoEnergetico> listaConsumi = new ArrayList<>();
+        listaConsumi = consumoEnergeticoRepository.findConsumiByAbitazione(abitazione.getIdAbitazione()).stream()
                 .filter(consumo -> consumo.getData().isAfter(inizio) && consumo.getData().isBefore(fine))
                 .toList();
 
-        return lista_consumi;
+        return listaConsumi;
     }
 
     public List<ProduzioneEnergia> visualizzaProduzione(Abitazione abitazione, LocalDateTime inizio, LocalDateTime fine) {
-        List<ProduzioneEnergia> lista_produzione = new ArrayList<>();
-        lista_produzione = abitazioneRepository.findByAbitazioneProduzione(abitazione.getIdAbitazione()).stream()
+        List<ProduzioneEnergia> listaProduzione = new ArrayList<>();
+        listaProduzione = produzioneEnergiaRepository.findProduzioneByAbitazione(abitazione.getIdAbitazione()).stream()
                 .filter(consumo -> consumo.getData().isAfter(inizio) && consumo.getData().isBefore(fine))
                 .toList();
 
-        return lista_produzione;
+        return listaProduzione;
 
 
     }

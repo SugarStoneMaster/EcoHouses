@@ -2,10 +2,12 @@ package it.ecohouses.www.backend.repositories;
 
 import it.ecohouses.www.backend.model.ConsumoEnergetico;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ConsumoEnergeticoRepository extends JpaRepository<ConsumoEnergetico, Long> {
-   //List<ConsumoEnergetico> filterByRange(List<ConsumoEnergetico> listaConsumi, LocalDateTime inizio, LocalDateTime fine);
+    @Query("SELECT c FROM ConsumoEnergetico c WHERE c.abitazione.idAbitazione = :idAbitazione")
+    List<ConsumoEnergetico> findConsumiByAbitazione(@Param("idAbitazione") Long idAbitazione);
 }

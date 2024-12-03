@@ -15,10 +15,6 @@ public class DbPopulator implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-         {
             populatorService.populate();
-        }
     }
-
-
 }

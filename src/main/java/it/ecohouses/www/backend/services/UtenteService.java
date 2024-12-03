@@ -1,6 +1,5 @@
 package it.ecohouses.www.backend.services;
 
-import it.ecohouses.www.backend.model.Abitazione;
 import it.ecohouses.www.backend.model.Utente;
 import it.ecohouses.www.backend.repositories.AbitazioneRepository;
 import it.ecohouses.www.backend.repositories.UtenteRepository;

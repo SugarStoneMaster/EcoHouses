@@ -1,15 +1,14 @@
 package it.ecohouses.www.backend.controllers;
 
 import it.ecohouses.www.backend.model.*;
-import it.ecohouses.www.backend.services.AbitazioneService;
+        import it.ecohouses.www.backend.services.AbitazioneService;
 import it.ecohouses.www.backend.services.UtenteService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+        import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -26,13 +25,12 @@ public class UtenteController {
 
     @PostMapping(value = "/registrazioneUtente")
     public ResponseEntity<?> registrazioneUtente(@RequestBody @Valid Utente utente) {
-        
         try {
             if (utente.isGestore()) {
-                if (utente.getAbitazione() != null ) {
+                if (utente.getAbitazione() != null) {
                     // Salva l'abitazione
                     Abitazione abitazione = utente.getAbitazione();
-                    Abitazione nuovaAbitazione = abitazioneService.registraAbitazione(abitazione, utente.getNickname());
+                    Abitazione nuovaAbitazione = abitazioneService.registraAbitazione(abitazione);
 
                     // Associa l'abitazione salvata all'utente
                     utente.setAbitazione(nuovaAbitazione);
@@ -44,7 +42,6 @@ public class UtenteController {
                 } else {
                     throw new IllegalArgumentException("Il gestore deve inserire un'abitazione.");
                 }
-
             }
 
             Utente nuovoUtente = utenteService.registrazioneUtente(utente);
@@ -58,7 +55,6 @@ public class UtenteController {
             return new ResponseEntity<>("Errore durante la registrazione.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
     @PostMapping("/autenticazioneUtente")
     public ResponseEntity<Map<String, Object>> autenticazioneUtente(@RequestBody Map<String, String> loginData) {
@@ -76,5 +72,4 @@ public class UtenteController {
             return new ResponseEntity<>(Map.of("error", e.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
-
 }
