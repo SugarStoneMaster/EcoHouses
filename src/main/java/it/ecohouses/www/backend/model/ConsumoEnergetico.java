@@ -1,9 +1,11 @@
 package it.ecohouses.www.backend.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import java.time.LocalDateTime;
 
 @Entity
+@Data
 public class ConsumoEnergetico {
 
     @Id
@@ -16,36 +18,6 @@ public class ConsumoEnergetico {
     private double valoreConsumo; // kWh consumati
     private LocalDateTime data;   // Data del consumo
 
-    // Getters e Setters
-    public Long getIdConsumo() {
-        return idConsumo;
-    }
-
-    public void setIdConsumo(Long idConsumo) {
-        this.idConsumo = idConsumo;
-    }
-
-    public Abitazione getAbitazione() {
-        return abitazione;
-    }
-
-    public void setAbitazione(Abitazione abitazione) {
-        this.abitazione = abitazione;
-    }
-
-    public double getValoreConsumo() {
-        return valoreConsumo;
-    }
-
-    public void setValoreConsumo(double valoreConsumo) {
-        this.valoreConsumo = valoreConsumo;
-    }
-
-    public LocalDateTime getData() {
-        return data;
-    }
-
-    public void setData(LocalDateTime data) {
-        this.data = data;
+    public ConsumoEnergetico( double kw, LocalDateTime now) {
     }
 }
