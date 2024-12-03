@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.text.ParseException;
 import java.time.LocalDateTime;
 
 
@@ -23,7 +22,7 @@ public class PopulatorService {
     private final ConsumoEnergeticoRepository consumoenergeticoRepository;
 
     @Transactional
-    public void populate() throws ParseException {
+    public void populate() {
         log.info("Populating database...");
 
 

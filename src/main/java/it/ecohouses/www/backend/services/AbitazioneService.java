@@ -4,17 +4,16 @@ import it.ecohouses.www.backend.model.Abitazione;
 import it.ecohouses.www.backend.repositories.AbitazioneRepository;
 import it.ecohouses.www.backend.repositories.UtenteRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class AbitazioneService {
 
-    @Autowired
+
     private AbitazioneRepository abitazioneRepository;
 
-    @Autowired
+
     private UtenteRepository utenteRepository;
 
     @Transactional

@@ -18,6 +18,12 @@ public class ConsumoEnergetico {
     private double valoreConsumo; // kWh consumati
     private LocalDateTime data;   // Data del consumo
 
-    public ConsumoEnergetico( double kw, LocalDateTime now) {
+    // Costruttore senza argomenti (richiesto da JPA)
+    public ConsumoEnergetico() {}
+
+    // Costruttore con argomenti per agevolare la creazione di oggetti
+    public ConsumoEnergetico(double kw, LocalDateTime now) {
+        this.valoreConsumo = kw;
+        this.data = now;
     }
 }
