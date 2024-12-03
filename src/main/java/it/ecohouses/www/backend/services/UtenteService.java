@@ -1,7 +1,6 @@
 package it.ecohouses.www.backend.services;
 
 import it.ecohouses.www.backend.model.Utente;
-import it.ecohouses.www.backend.repositories.AbitazioneRepository;
 import it.ecohouses.www.backend.repositories.UtenteRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +14,11 @@ public class UtenteService {
 
     private final UtenteRepository utenteRepository;
     private final PasswordEncoder passwordEncoder;
-    private final AbitazioneRepository abitazioneRepository;
 
     @Autowired
-    public UtenteService(UtenteRepository utenteRepository, PasswordEncoder passwordEncoder, AbitazioneRepository abitazioneRepository) {
+    public UtenteService(UtenteRepository utenteRepository, PasswordEncoder passwordEncoder) {
         this.utenteRepository = utenteRepository;
         this.passwordEncoder = passwordEncoder;
-        this.abitazioneRepository = abitazioneRepository;
     }
 
     @Transactional

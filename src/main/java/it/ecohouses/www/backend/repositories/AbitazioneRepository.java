@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AbitazioneRepository extends JpaRepository<Abitazione, Long> {
-
+    boolean existsByIdAbitazione(Long idAbitazione);
     boolean existsByNomeCasa(String nomeCasa);
 }
 

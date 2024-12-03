@@ -2,7 +2,6 @@ package it.ecohouses.www.backend.services;
 
 import it.ecohouses.www.backend.model.Abitazione;
 import it.ecohouses.www.backend.repositories.AbitazioneRepository;
-import it.ecohouses.www.backend.repositories.UtenteRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -10,11 +9,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class AbitazioneService {
 
+    private final AbitazioneRepository abitazioneRepository;
 
-    private AbitazioneRepository abitazioneRepository;
-
-
-    private UtenteRepository utenteRepository;
+    public AbitazioneService(AbitazioneRepository abitazioneRepository) {
+        this.abitazioneRepository = abitazioneRepository;
+    }
 
     @Transactional
     public Abitazione registraAbitazione(Abitazione abitazione) {

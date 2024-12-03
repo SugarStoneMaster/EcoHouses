@@ -30,6 +30,7 @@ public class PopulatorService {
         Abitazione abitazione = new Abitazione("casina", "c.jpg", 22, "classe1", 4, "Fisciano");
         abitazioneRepository.save(abitazione);
         ConsumoEnergetico consumo = new ConsumoEnergetico(20.5,(LocalDateTime.now()));
+        consumo.setAbitazione(abitazione);
         consumoenergeticoRepository.save(consumo);
         gestore.setAbitazione(abitazione);
         utenteRepository.save(gestore);

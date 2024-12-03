@@ -11,8 +11,7 @@ import lombok.*;
 public class DispositivoIoT {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idDispositivoIoT;
+    private Long numeroSerie;
 
     @Column(nullable = false)
     private String nomeDispositivo;
@@ -29,4 +28,9 @@ public class DispositivoIoT {
     @ManyToOne
     private Abitazione abitazione;
 
+    @PrePersist
+    public void prePersist() {
+        this.statoConnessione = true; // Imposta statoConnessione a true
+        this.statoAccensione = false; // Imposta statoAccensione a false
+    }
 }
