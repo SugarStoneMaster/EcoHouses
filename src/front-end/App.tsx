@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginPage from './components/LoginPage'; // Importa la schermata di login
 import SignupPage from './components/SignupPage'; // Importa la schermata di registrazione
+import Dashboard from './components/Dashboard'; // Importa la schermata di registrazione
 
 const Stack = createStackNavigator();
 
@@ -23,6 +24,19 @@ function App(): JSX.Element {
                     component={SignupPage}
                     options={{ headerShown: true, title: 'Registrati' }} // Mostra l'header con il titolo "Registrati"
                 />
+                {/* Schermata della Dashboard */}
+                <Stack.Screen
+                    name="Dashboard"
+                    component={Dashboard}
+                    options={{
+                        headerShown: true,
+                        title: 'Dashboard', // Titolo mostrato nell'header
+                        headerStyle: { backgroundColor: '#007bff' }, // Colore di sfondo dell'header
+                        headerTintColor: '#fff', // Colore del testo dell'header
+                        headerTitleStyle: { fontWeight: 'bold' }, // Stile del titolo
+                    }}
+                />
+
             </Stack.Navigator>
         </NavigationContainer>
     );
