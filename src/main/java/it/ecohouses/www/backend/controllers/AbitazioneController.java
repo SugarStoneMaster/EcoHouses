@@ -17,24 +17,6 @@ public class AbitazioneController {
     @Autowired
     private AbitazioneService abitazioneService;
 
-    /*@PostMapping("/registrazioneAbitazione")
-    public ResponseEntity<Abitazione> registraAbitazione(
-            @RequestParam("nickname") String nickname,
-            @Valid @RequestBody Abitazione abitazione) {
-        try {
-            // Passa nickname e abitazione al servizio
-            Abitazione nuovaAbitazione = abitazioneService.registraAbitazione(abitazione, nickname);
-            return new ResponseEntity<>(nuovaAbitazione, HttpStatus.CREATED);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
-    }*/
-
-   /* @GetMapping("/find-by-abitazione")
-    public ResponseEntity<Abitazione> findByAbitazione(@RequestBody Long idAbitazione) {
-        //da implementare
-
-    }*/
 
 }
 
