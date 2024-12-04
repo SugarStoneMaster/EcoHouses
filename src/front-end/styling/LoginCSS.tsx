@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     input: {
         width: '90%',
         backgroundColor: '#CFE3CC',
-        borderRadius: 15,
+        borderRadius: 35,
         padding: 10,
         marginBottom: 15,
         flexDirection: 'row',
@@ -35,7 +35,7 @@ export const styles = StyleSheet.create({
     loginButton: {
         width: '90%',
         backgroundColor: '#B3D5F2',
-        borderRadius: 15,
+        borderRadius: 25,
         paddingVertical: 12,
         alignItems: 'center',
         shadowColor: '#000',
@@ -61,8 +61,9 @@ export const styles = StyleSheet.create({
     registerButton: {
         width: '95%',
         backgroundColor: '#B3D5F2',
-        borderRadius: 15,
-        paddingVertical: 12,
+        borderRadius: 25,
+        paddingHorizontal: 14,
+        paddingVertical: 10,
         alignItems: 'center',
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },

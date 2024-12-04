@@ -10,24 +10,23 @@ const LoginPage = () => {
     const [emailOrUsername, setEmailOrUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigation = useNavigation();
-    const { setUserSession } = useContext(UserContext); // Contesto utente per la sessione
+    const { setUserSession } = useContext(UserContext);
 
     // Funzione per gestire il login
     const login = async () => {
         if (!emailOrUsername || !password) {
-            Alert.alert('Errore', 'Inserisci email/username e password.');
+            Alert.alert('Errore', 'Inserisci email/username e password');
             return;
         }
 
         try {
-            const res = await UserApi.login(emailOrUsername, password);
-            if (res && res.isSignedIn) {
-                // Aggiorna la sessione utente e naviga alla dashboard
-                setUserSession?.(res);
+            const res = await UserApi.login(emailOrUsername, password); // Chiamata all'API per il login
+            if (res.isSignedIn) {
+                setUserSession?.(); // Imposta la sessione con i dati dell'utente
                 Alert.alert('Successo', 'Accesso effettuato con successo!');
                 navigation.navigate('Dashboard');
             } else {
-                Alert.alert('Errore', 'Credenziali non valide. Riprova.');
+                Alert.alert('Errore', res.message || 'Credenziali non valide. Riprova.');
             }
         } catch (err) {
             console.error('Errore durante il login:', err);
