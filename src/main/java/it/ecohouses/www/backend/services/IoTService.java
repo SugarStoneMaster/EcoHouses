@@ -7,6 +7,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class IoTService {
 
@@ -21,6 +23,8 @@ public class IoTService {
 
     @Transactional
     public DispositivoIoT registraDispositivoIoT(DispositivoIoT dispositivoIoT) {
+
+        System.out.println("Service: " + dispositivoIoT);
         if (dispositivoIoTRepository.existsByNumeroSerie(dispositivoIoT.getNumeroSerie())) {
             throw new IllegalArgumentException("Dispositivo già registrato.");
         }
@@ -33,6 +37,15 @@ public class IoTService {
 
         if (!abitazioneRepository.existsByIdAbitazione(dispositivoIoT.getAbitazione().getIdAbitazione())) {
             throw new IllegalArgumentException("l'abitazione non esiste");
+        }
+
+        if ("SmartMeter".equals(dispositivoIoT.getTipoDispositivo())) {
+            List<DispositivoIoT> dispositiviEsistenti = dispositivoIoTRepository.findDispositiviByAbitazione(dispositivoIoT.getAbitazione().getIdAbitazione());
+            for (DispositivoIoT dispositivo : dispositiviEsistenti) {
+                if ("SmartMeter".equals(dispositivo.getTipoDispositivo())) {
+                    throw new IllegalArgumentException("Esiste già uno SmartMeter per questa abitazione.");
+                }
+            }
         }
 
         return dispositivoIoTRepository.save(dispositivoIoT);
