@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginPage from './components/LoginPage'; // Importa la schermata di login
 import SignupPage from './components/SignupPage'; // Importa la schermata di registrazione
-import Dashboard from './components/Dashboard'; // Importa la schermata di registrazione
+import Dashboard from './components/Dashboard'; // Importa la dashboard
 
 const Stack = createStackNavigator();
 
