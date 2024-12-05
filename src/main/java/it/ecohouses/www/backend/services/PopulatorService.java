@@ -2,10 +2,14 @@ package it.ecohouses.www.backend.services;
 
 import it.ecohouses.www.backend.model.*;
 import it.ecohouses.www.backend.repositories.*;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -17,7 +21,8 @@ public class PopulatorService {
     private final AbitazioneRepository abitazioneRepository;
     private final ConsumoEnergeticoRepository consumoenergeticoRepository;
     private final ProduzioneEnergiaRepository produzioneenergiaRepository;
-    private final PostRepository postRepository;
+    private final ClassificaRepository classificaRepository;
+    private final ClassificaAbitazioneRepository classificaAbitazioneRepository;
 
     @Transactional
     public void populate() {
@@ -48,8 +53,21 @@ public class PopulatorService {
         utente1.setAbitazione(abitazione1);
         utenteRepository.save(utente1);
 
+        Classifica classificaLocaleFisciano = new Classifica(true, LocalDate.now(), null, "Fisciano");
+        classificaRepository.save(classificaLocaleFisciano);
 
+        Abitazione abitazione2 = abitazioneRepository.findById(6L)
+                .orElseThrow(() -> new RuntimeException("Abitazione non trovata"));
+        ClassificaAbitazione classificaAbitazione1 = new ClassificaAbitazione(classificaLocaleFisciano, abitazione2, 1, 100);
+        classificaAbitazioneRepository.save(classificaAbitazione1);
 
+        Classifica classificaGlobale = new Classifica(false, LocalDate.now(), null, null);
+        classificaRepository.save(classificaGlobale);
+
+        Abitazione abitazione3 = abitazioneRepository.findById(7L)
+                .orElseThrow(() -> new RuntimeException("Abitazione non trovata"));
+        ClassificaAbitazione classificaAbitazione2 = new ClassificaAbitazione(classificaGlobale, abitazione3, 1, 100);
+        classificaAbitazioneRepository.save(classificaAbitazione2);
 
 
         log.info("Database populated with utenti e gestori.");
