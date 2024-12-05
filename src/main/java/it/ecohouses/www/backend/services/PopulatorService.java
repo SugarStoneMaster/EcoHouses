@@ -1,11 +1,7 @@
 package it.ecohouses.www.backend.services;
 
-import it.ecohouses.www.backend.model.Abitazione;
-import it.ecohouses.www.backend.model.ConsumoEnergetico;
-import it.ecohouses.www.backend.model.Utente;
-import it.ecohouses.www.backend.repositories.AbitazioneRepository;
-import it.ecohouses.www.backend.repositories.ConsumoEnergeticoRepository;
-import it.ecohouses.www.backend.repositories.UtenteRepository;
+import it.ecohouses.www.backend.model.*;
+import it.ecohouses.www.backend.repositories.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -20,6 +16,8 @@ public class PopulatorService {
     private final UtenteRepository utenteRepository;
     private final AbitazioneRepository abitazioneRepository;
     private final ConsumoEnergeticoRepository consumoenergeticoRepository;
+    private final ProduzioneEnergiaRepository produzioneenergiaRepository;
+    private final PostRepository postRepository;
 
     @Transactional
     public void populate() {
@@ -29,9 +27,17 @@ public class PopulatorService {
         Utente gestore = new Utente("Marco", "gestore@example.com", "DPBHTX46A26B064I", "a.jpg", true);
         Abitazione abitazione = new Abitazione("casina", "c.jpg", 22, "classe1", 4, "Fisciano");
         abitazioneRepository.save(abitazione);
+        ProduzioneEnergia produzione = new ProduzioneEnergia(10,(LocalDateTime.now()));
+        produzione.setAbitazione(abitazione);
+        produzioneenergiaRepository.save(produzione);
         ConsumoEnergetico consumo = new ConsumoEnergetico(20.5,(LocalDateTime.now()));
         consumo.setAbitazione(abitazione);
         consumoenergeticoRepository.save(consumo);
+        consumo.setAbitazione(abitazione);
+        ConsumoEnergetico consumo1 = new ConsumoEnergetico(10,(LocalDateTime.now()));
+        consumo.setAbitazione(abitazione);
+        consumoenergeticoRepository.save(consumo1);
+        consumo1.setAbitazione(abitazione);
         gestore.setAbitazione(abitazione);
         utenteRepository.save(gestore);
 

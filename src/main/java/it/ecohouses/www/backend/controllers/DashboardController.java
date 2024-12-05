@@ -1,6 +1,6 @@
 package it.ecohouses.www.backend.controllers;
 
-import it.ecohouses.www.backend.model.Abitazione;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import it.ecohouses.www.backend.model.ConsumoEnergetico;
 import it.ecohouses.www.backend.model.ProduzioneEnergia;
 import it.ecohouses.www.backend.services.DashboardService;
@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/dashboard")
@@ -18,17 +19,21 @@ public class DashboardController {
         this.dashboardService = dashboardService;
     }
 
-    @GetMapping("/consumi")
-    public List<ConsumoEnergetico> getConsumi(@RequestParam Abitazione abitazione,
-                                              @RequestParam LocalDateTime inizio,
-                                              @RequestParam LocalDateTime fine) {
-        return dashboardService.visualizzaConsumi(abitazione, inizio, fine);
+    @PostMapping("/consumi")
+    public List<ConsumoEnergetico> getConsumi(@RequestBody Map<String, Object> requestBody) {
+        Long abitazioneId = Long.parseLong(requestBody.get("abitazioneId").toString());
+        LocalDateTime inizio = LocalDateTime.parse(requestBody.get("inizio").toString());
+        LocalDateTime fine = LocalDateTime.parse(requestBody.get("fine").toString());
+
+        return dashboardService.visualizzaConsumi(abitazioneId, inizio, fine);
     }
 
-    @GetMapping("/produzione")
-    public List<ProduzioneEnergia> getProduzione(@RequestParam Abitazione abitazione,
-                                                 @RequestParam LocalDateTime inizio,
-                                                 @RequestParam LocalDateTime fine) {
-        return dashboardService.visualizzaProduzione(abitazione, inizio, fine);
+    @PostMapping("/produzione")
+    public List<ProduzioneEnergia> getProduzione(@RequestBody Map<String, Object> requestBody) {
+        Long abitazioneId = Long.parseLong(requestBody.get("abitazioneId").toString());
+        LocalDateTime inizio = LocalDateTime.parse(requestBody.get("inizio").toString());
+        LocalDateTime fine = LocalDateTime.parse(requestBody.get("fine").toString());
+
+        return dashboardService.visualizzaProduzione(abitazioneId, inizio, fine);
     }
 }

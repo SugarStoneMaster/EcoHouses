@@ -19,23 +19,18 @@ public class SocialService {
         this.utenteRepository = utenteRepository;
     }
 
-    public Post creaPost(String nickname, String testo, String immagine) {
+    public Post creaPost(Post post) {
         // Trova l'utente autore tramite il nickname
-        Optional<Utente> optionalUtente = utenteRepository.findByNickname(nickname);
+        Optional<Utente> optionalUtente = utenteRepository.findByNickname(post.getAutore().getNickname());
 
         if (optionalUtente.isPresent()) {
             Utente autore = optionalUtente.get();
-
-            // Crea un nuovo post
-            Post nuovoPost = new Post();
-            nuovoPost.setAutore(autore);
-            nuovoPost.setTesto(testo);
-            nuovoPost.setImmagine(immagine);
+            post.setAutore(autore);
 
             // Salva il post nel database
-            return postRepository.save(nuovoPost);
+            return postRepository.save(post);
         } else {
-            throw new IllegalArgumentException("Utente con nickname " + nickname + " non trovato.");
+            throw new IllegalArgumentException("Utente con nickname " + post.getAutore().getNickname() + " non trovato.");
         }
     }
 }

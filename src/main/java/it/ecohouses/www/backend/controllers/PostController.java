@@ -16,13 +16,9 @@ public class PostController {
     }
 
     @PostMapping("/crea")
-    public ResponseEntity<Post> creaPost(
-            @RequestParam String nickname,
-            @RequestParam String testo,
-            @RequestParam(required = false) String immagine
-    ) {
+    public ResponseEntity<Post> creaPost(@RequestBody Post post) {
         try {
-            Post nuovoPost = socialService.creaPost(nickname, testo, immagine);
+            Post nuovoPost = socialService.creaPost(post);
             return ResponseEntity.ok(nuovoPost);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(null);
