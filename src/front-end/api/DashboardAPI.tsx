@@ -1,5 +1,8 @@
 // src/api/DashboardAPI.ts
 
+// src/api/DashboardAPI.ts
+const apiEndpoint = 'localhost'; // Sostituisci con l'IP o il dominio del server back-end
+
 export default class DashboardAPI {
     static getDateRange(selectedTime: string) {
         const now = new Date(); // Data corrente
@@ -34,7 +37,7 @@ export default class DashboardAPI {
     static async fetchConsumi(abitazioneId: number, selectedTime: string) {
         const { inizio, fine } = this.getDateRange(selectedTime);
 
-        const response = await fetch('http://localhost:8080/api/dashboard/consumi', {
+        const response = await fetch('http://' + apiEndpoint + ':8080/api/dashboard/consumi', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json', // Specifica il formato JSON
@@ -51,7 +54,7 @@ export default class DashboardAPI {
     static async fetchProduzione(abitazioneId: number, selectedTime: string) {
         const { inizio, fine } = this.getDateRange(selectedTime);
 
-        const response = await fetch('http://localhost:8080/api/dashboard/produzione', {
+        const response = await fetch('http://' + apiEndpoint + ':8080/api/dashboard/produzione', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json', // Specifica il formato JSON

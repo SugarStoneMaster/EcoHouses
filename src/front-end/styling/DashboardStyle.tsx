@@ -1,4 +1,4 @@
-//DasboardStyle.tsx
+//DashboardStyle.tsx
 import { StyleSheet } from 'react-native';
 
 export const chartConfig = {
