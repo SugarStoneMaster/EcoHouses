@@ -14,4 +14,11 @@ public interface DispositivoIoTRepository extends JpaRepository<DispositivoIoT, 
     @Query("SELECT d FROM DispositivoIoT d WHERE d.abitazione.idAbitazione = :idAbitazione")
     List<DispositivoIoT> findDispositiviByAbitazione(@Param("idAbitazione") Long idAbitazione);
 
+    @Query("SELECT d FROM DispositivoIoT d " +
+            "JOIN Utente u ON u.abitazione.idAbitazione = d.abitazione.idAbitazione " +
+            "WHERE u.nickname = :nickname")
+    List<DispositivoIoT> findDispositiviByNickname(@Param("nickname") String nickname);
+
+
+
 }

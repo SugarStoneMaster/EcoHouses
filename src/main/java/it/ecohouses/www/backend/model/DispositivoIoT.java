@@ -1,5 +1,6 @@
 package it.ecohouses.www.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -8,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "dispositivoIoT")
+@ToString
 public class DispositivoIoT {
 
     @Id
@@ -26,6 +28,7 @@ public class DispositivoIoT {
     private boolean statoAccensione;
 
     @ManyToOne
+    @JsonIgnore
     private Abitazione abitazione;
 
     @PrePersist
