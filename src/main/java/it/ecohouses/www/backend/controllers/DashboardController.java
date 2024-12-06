@@ -1,6 +1,7 @@
 package it.ecohouses.www.backend.controllers;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import it.ecohouses.www.backend.model.Abitazione;
 import it.ecohouses.www.backend.model.ConsumoEnergetico;
 import it.ecohouses.www.backend.model.ProduzioneEnergia;
 import it.ecohouses.www.backend.services.DashboardService;
@@ -35,5 +36,14 @@ public class DashboardController {
         LocalDateTime fine = LocalDateTime.parse(requestBody.get("fine").toString());
 
         return dashboardService.visualizzaProduzione(abitazioneId, inizio, fine);
+    }
+
+    @PostMapping("/media-consumi")
+    public Double getMediaConsumi(@RequestBody Map<String, Object> requestBody) {
+        String nicknameUtente = requestBody.get("nickname").toString();
+        LocalDateTime inizio = LocalDateTime.parse(requestBody.get("inizio").toString());
+        LocalDateTime fine = LocalDateTime.parse(requestBody.get("fine").toString());
+
+        return dashboardService.getMediaConsumi(nicknameUtente, inizio, fine);
     }
 }
