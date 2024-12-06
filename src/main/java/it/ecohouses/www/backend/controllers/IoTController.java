@@ -3,13 +3,12 @@ package it.ecohouses.www.backend.controllers;
 import it.ecohouses.www.backend.model.DispositivoIoT;
 import it.ecohouses.www.backend.model.SmartMeter;
 import it.ecohouses.www.backend.services.IoTService;
+import org.apache.catalina.LifecycleState;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -31,6 +30,16 @@ public class IoTController {
             System.out.println(e.getMessage());
             return new ResponseEntity<>("Errore durante la registrazione del dispositivo.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping(value = "/recupera-dispositivi")
+    public ResponseEntity<?> recuperaDispositivoIoT(@RequestBody  Map<String, Object> requestBody){
+
+        String nickname = requestBody.get("nickname").toString();
+        System.out.println("Nickname richiesto: " + nickname);
+        List<DispositivoIoT> dispositivi = iotService.retriveDispositivi(nickname);
+        System.out.println(dispositivi);
+        return new ResponseEntity<>(dispositivi, HttpStatus.OK);
     }
 
     @PostMapping(value = "/LoginSmartMeter")

@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,7 +25,6 @@ public class IoTService {
     @Transactional
     public DispositivoIoT registraDispositivoIoT(DispositivoIoT dispositivoIoT) {
 
-        System.out.println("Service: " + dispositivoIoT);
         if (dispositivoIoTRepository.existsByNumeroSerie(dispositivoIoT.getNumeroSerie())) {
             throw new IllegalArgumentException("Dispositivo già registrato.");
         }
@@ -49,6 +49,12 @@ public class IoTService {
         }
 
         return dispositivoIoTRepository.save(dispositivoIoT);
+    }
+
+    @Transactional
+    public List<DispositivoIoT> retriveDispositivi(String nickname){
+        List<DispositivoIoT> listaDispositivi = dispositivoIoTRepository.findDispositiviByNickname(nickname);
+        return listaDispositivi;
     }
 
 }
