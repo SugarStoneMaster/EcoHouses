@@ -1,22 +1,25 @@
+//DashboardStyle.tsx
 import { StyleSheet } from 'react-native';
 
-// Configurazione per i grafici (a linee e a torta)
 export const chartConfig = {
     backgroundGradientFrom: '#ffffff',
     backgroundGradientTo: '#ffffff',
-    color: (opacity = 1) => `rgba(0, 0, 255, ${opacity})`, // Colore della linea o delle barre
-    labelColor: () => '#000', // Colore delle etichette
-    strokeWidth: 2, // Larghezza della linea
+    color: (opacity = 1) => `rgba(0, 0, 255, ${opacity})`,
+    labelColor: () => '#000',
+    strokeWidth: 2,
 };
 
-// Configurazione del grafico a torta (colore e impostazioni delle sezioni)
 export const pieChartConfig = {
     backgroundColor: '#ffffff',
-    color: () => '#000', // Colore della sezione
-    labelColor: '#000',
+    color: (opacity = 1) => `rgba(0, 0, 255, ${opacity})`,
+    labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+    decimalPlaces: 2,
+    style: {
+        borderRadius: 16,
+    },
 };
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
     dashboardContainer: {
         flex: 1,
         padding: 16,
@@ -57,5 +60,3 @@ const styles = StyleSheet.create({
         marginBottom: 8,
     },
 });
-
-export default styles;
