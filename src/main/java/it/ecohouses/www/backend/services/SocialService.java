@@ -6,6 +6,7 @@ import it.ecohouses.www.backend.repositories.PostRepository;
 import it.ecohouses.www.backend.repositories.UtenteRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -32,5 +33,8 @@ public class SocialService {
         } else {
             throw new IllegalArgumentException("Utente con nickname " + post.getAutore().getNickname() + " non trovato.");
         }
+    }
+    public List<Post> getTuttiIPost() {
+        return postRepository.findAll();
     }
 }
