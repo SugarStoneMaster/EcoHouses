@@ -5,6 +5,8 @@ import it.ecohouses.www.backend.services.SocialService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/posts")
 public class PostController {
@@ -24,4 +26,11 @@ public class PostController {
             return ResponseEntity.badRequest().body(null);
         }
     }
+
+    @GetMapping("/tutti")
+    public ResponseEntity<List<Post>> ottieniTuttiIPost() {
+        List<Post> posts = socialService.getTuttiIPost();
+        return ResponseEntity.ok(posts);
+    }
+
 }
