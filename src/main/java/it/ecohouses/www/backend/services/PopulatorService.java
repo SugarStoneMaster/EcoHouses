@@ -56,18 +56,14 @@ public class PopulatorService {
         Classifica classificaLocaleFisciano = new Classifica(true, LocalDate.now(), null, "Fisciano");
         classificaRepository.save(classificaLocaleFisciano);
 
-        Abitazione abitazione2 = abitazioneRepository.findById(6L)
-                .orElseThrow(() -> new RuntimeException("Abitazione non trovata"));
-        ClassificaAbitazione classificaAbitazione1 = new ClassificaAbitazione(classificaLocaleFisciano, abitazione2, 1, 100);
-        classificaAbitazioneRepository.save(classificaAbitazione1);
+        ClassificaAbitazione classificaAbitazioniFisiciano = new ClassificaAbitazione(classificaLocaleFisciano, abitazione1, 1, 100);
+        classificaAbitazioneRepository.save(classificaAbitazioniFisiciano);
 
         Classifica classificaGlobale = new Classifica(false, LocalDate.now(), null, null);
         classificaRepository.save(classificaGlobale);
 
-        Abitazione abitazione3 = abitazioneRepository.findById(7L)
-                .orElseThrow(() -> new RuntimeException("Abitazione non trovata"));
-        ClassificaAbitazione classificaAbitazione2 = new ClassificaAbitazione(classificaGlobale, abitazione3, 1, 100);
-        classificaAbitazioneRepository.save(classificaAbitazione2);
+        ClassificaAbitazione classificaAbitazioniGlobale = new ClassificaAbitazione(classificaGlobale, abitazione, 1, 100);
+        classificaAbitazioneRepository.save(classificaAbitazioniGlobale);
 
 
         log.info("Database populated with utenti e gestori.");
