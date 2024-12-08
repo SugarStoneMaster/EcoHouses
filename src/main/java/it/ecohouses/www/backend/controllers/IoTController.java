@@ -32,7 +32,7 @@ public class IoTController {
         }
     }
 
-    @GetMapping(value = "/recupera-dispositivi")
+    @PostMapping(value = "/recupera-dispositivi")
     public ResponseEntity<?> recuperaDispositivoIoT(@RequestBody  Map<String, Object> requestBody){
 
         String nickname = requestBody.get("nickname").toString();
