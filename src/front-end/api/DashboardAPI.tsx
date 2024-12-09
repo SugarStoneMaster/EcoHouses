@@ -12,7 +12,7 @@ export default class DashboardAPI {
             const id = await AsyncStorage.getItem('abitazioneId');
             return id ? parseInt(id) : null; // Se non c'è, restituisce null
         } catch (error) {
-            console.error('Errore durante il recupero dell\'abitazioneId:', error);
+            console.error("Errore durante il recupero dell'abitazioneId:", error);
             return null; // Se c'è un errore, restituisce null
         }
     }

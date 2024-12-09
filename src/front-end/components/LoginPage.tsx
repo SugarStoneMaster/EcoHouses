@@ -2,8 +2,8 @@ import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../styling/LoginCSS';
-import UserApi from '../api/UserApi';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import UserApi from '../api/UserApi';
 import UserContext from '../contexts/UserContext';
 
 const LoginPage = () => {
@@ -24,7 +24,7 @@ const LoginPage = () => {
             if (res.isSignedIn) {
                 setUserSession?.(); // Imposta la sessione con i dati dell'utente
                 Alert.alert('Successo', 'Accesso effettuato con successo!');
-                navigation.navigate('Dashboard');
+                navigation.navigate('IotPage');
             } else {
                 Alert.alert('Errore', res.message || 'Credenziali non valide. Riprova.');
             }
@@ -40,7 +40,7 @@ const LoginPage = () => {
 
             {/* Input per Email o Username */}
             <View style={styles.input}>
-                <FontAwesome name="user" size={20} color="grey" style={styles.inputIcon} />
+                <FontAwesome name="pencil" size={20} color="grey" style={styles.inputIcon} />
                 <TextInput
                     style={styles.inputText}
                     placeholder="Nome utente/Email"
