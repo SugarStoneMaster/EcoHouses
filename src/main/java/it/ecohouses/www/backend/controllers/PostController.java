@@ -1,5 +1,6 @@
 package it.ecohouses.www.backend.controllers;
 
+import it.ecohouses.www.backend.model.Commento;
 import it.ecohouses.www.backend.model.Post;
 import it.ecohouses.www.backend.services.SocialService;
 import org.springframework.http.ResponseEntity;
@@ -33,4 +34,23 @@ public class PostController {
         return ResponseEntity.ok(posts);
     }
 
+    @PostMapping("/{idPost}/commenta")
+    public ResponseEntity<Commento> aggiungiCommento(@PathVariable Long idPost, @RequestBody Commento commento) {
+        try {
+            Commento nuovoCommento = socialService.aggiungiCommento(idPost, commento);
+            return ResponseEntity.ok(nuovoCommento);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+    @PostMapping("/commenti/{idCommento}/like")
+    public ResponseEntity<Commento> mettiLike(@PathVariable Long idCommento) {
+        try {
+            Commento commentoConLike = socialService.mettiLike(idCommento);
+            return ResponseEntity.ok(commentoConLike);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
 }
