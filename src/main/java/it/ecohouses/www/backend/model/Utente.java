@@ -76,4 +76,5 @@ public class Utente {
                 ", gestore=" + gestore +
                 '}';
     }
+
 }
