@@ -23,7 +23,7 @@ public class Classifica {
     @Column(nullable = false)
     private boolean tipoClassifica; // true se è locale, false se è globale
 
-    @Column
+    @Column(nullable = false)
     private LocalDate dataCreazione;
 
     @Column

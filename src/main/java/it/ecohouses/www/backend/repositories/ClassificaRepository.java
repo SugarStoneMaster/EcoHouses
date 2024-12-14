@@ -16,13 +16,13 @@ public interface ClassificaRepository extends JpaRepository<Classifica, Long> {
             "WHERE c.comune = :comune " +
             "AND c.tipoClassifica = true " +
             "ORDER BY c.dataCreazione DESC")
-    Optional<Long> findLatestLocalIdByComune(String comune);
+    Optional<Classifica> findLatestLocalByComune(String comune);
 
 
     @Query("SELECT c.idClassifica FROM Classifica c " +
             "WHERE c.tipoClassifica = false " +
             "ORDER BY c.dataCreazione DESC")
-    Optional<Long> findLatestGlobalId();
+    Optional<Classifica> findLatestGlobal();
 
     boolean existsByComune(String comune);
 }

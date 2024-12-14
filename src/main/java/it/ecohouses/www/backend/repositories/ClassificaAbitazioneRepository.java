@@ -13,17 +13,21 @@ import java.util.Optional;
 public interface ClassificaAbitazioneRepository extends JpaRepository<ClassificaAbitazione, Long> {
 
     // Query per ottenere i primi 10 utenti in una classifica
-    @Query("SELECT ca.abitazione.nomeCasa, ca.posizione, ca.punteggio FROM ClassificaAbitazione ca " +
+    @Query("SELECT ca FROM ClassificaAbitazione ca " +
             "WHERE ca.classifica.idClassifica = :idClassifica " +
             "ORDER BY ca.posizione ASC")
-    List<Object[]> findTop100ByClassifica(@Param("idClassifica") Long idClassifica);
+    List<ClassificaAbitazione> findTop100ByClassifica(@Param("idClassifica") Long idClassifica);
 
+    //query per ottenere posizione e punetggio di un'abitazione in una classifica
     @Query("SELECT ca.posizione, ca.punteggio " +
             "FROM ClassificaAbitazione ca " +
             "WHERE ca.classifica.idClassifica = :idClassifica " +  // Confronta l'ID della Classifica
             "AND ca.abitazione.idAbitazione = :idAbitazione")     // Confronta l'ID dell'Abitazione
     Optional<Object[]> findPosizioneAndPunteggioByClassificaAndAbitazione(@Param("idClassifica") Long idClassifica,
                                                                           @Param("idAbitazione") Long idAbitazione);
+
+    //query per controllare se una classifica di abitazioni esiste
+    boolean existsByClassificaIdClassifica(Long idClassifica);
 
 }
 

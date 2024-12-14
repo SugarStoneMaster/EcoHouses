@@ -32,11 +32,12 @@ public class GamificationService {
     /*
      * Recupera la classifica locale più recente per un dato utente.
      */
-    public long getClassificaLocale(String nickname) {
+    public Classifica getClassificaLocale(String nickname) {
         // Recupera il comune dell'utente
         String comune = utenteRepository.findComuneByNickname(nickname);
 
         // Verifica se esiste una classifica locale per il comune
+        // Se non esiste, crea una nuova classifica locale
         if (!classificaRepository.existsByComune(comune)) {
             Classifica classifica = new Classifica();
             classifica.setTipoClassifica(true); // Locale
@@ -47,30 +48,31 @@ public class GamificationService {
             // Salva la nuova classifica locale
             classificaRepository.save(classifica);
 
-            // Recupera l'ID della classifica appena creata
-            return classifica.getIdClassifica();
+            // Restituisce la nuova classifica locale
+            return classifica;
         }
 
         else{// Recupera la classifica locale più recente per il comune
-            return classificaRepository.findLatestLocalIdByComune(comune)
-                    .orElseThrow(() -> new RuntimeException("Classifica locale non trovata per il comune: " + comune));
+            return classificaRepository.findLatestLocalByComune(comune)
+                    .orElseThrow(() -> new RuntimeException("Errore nel recupero della classifica locale."));
         }
 
     }
 
-    public long getClassificaGlobale() {
+    public Classifica getClassificaGlobale() {
         // Recupera la classifica globale più recente
-        return classificaRepository.findLatestGlobalId()
-                .orElseThrow(() -> new RuntimeException("Classifica globale non trovata"));
+        return classificaRepository.findLatestGlobal()
+                .orElseThrow(() -> new RuntimeException("Errore nel recupero della classifica globale."));
     }
 
     /**
-     * Ottiene le prime 10 abitazioni di una classifica.
-     * @return Una lista delle prime 10 abitazioni nella classifica.
+     * Ottiene le prime 100 abitazioni di una classifica.
+     * @return Una lista delle prime 100 abitazioni nella classifica.
      */
-    public List<Object[]> getTop100Abitazioni(Long idClassifica) {
-        // Usa il repository per recuperare le prime 100 abitazioni della classifica
+    public List<ClassificaAbitazione> getTop100Abitazioni(Long idClassifica) {
+
         return classificaAbitazioneRepository.findTop100ByClassifica(idClassifica);
+
     }
 
 
@@ -220,77 +222,63 @@ public class GamificationService {
             case "FACILE" -> 20;
             case "MEDIA" -> 40;
             case "DIFFICILE" -> 60;
-            default -> 0; // Valore di default
+            default -> throw new IllegalArgumentException("Difficoltà non valida");
         };
 
         int moltiplicatore = switch (durata.toUpperCase()) {
             case "SETTIMANALE" -> 2;
             case "MENSILE" -> 3;
-            default -> 1; // Valore di default
+            default -> throw new IllegalArgumentException("Durata non valida");
         };
 
         return punteggioBase * moltiplicatore;
     }
 
-    public Sfida creaSfidaDiGruppo(String difficolta, String durata, String nicknameCreatore, List<String> nicknamePartecipanti) {
+    public Sfida creaSfidaDiGruppo(String difficolta, String durata, String nicknameCreatore, int numeroPartecipanti) {
 
-        //recupera l'abitazione dell'utente creatore
-        Utente utenteCreatore = utenteRepository.findByNickname(nicknameCreatore)
-                .orElseThrow(() -> new RuntimeException("Utente non trovato: " + nicknameCreatore));
-        Abitazione abitazioneCreatore = utenteCreatore.getAbitazione();
+        try {
 
-        //recupera le abitazioni dei partecipanti
-        List<Abitazione> abitazioniPartecipanti = new ArrayList<>();
-        for (String nickname : nicknamePartecipanti) {
-            Utente utentePartecipante = utenteRepository.findByNickname(nickname)
-                    .orElseThrow(() -> new RuntimeException("Utente non trovato: " + nickname));
-            Abitazione abitazionePartecipante = utentePartecipante.getAbitazione();
-            abitazioniPartecipanti.add(abitazionePartecipante);
+            //recupera l'abitazione dell'utente creatore
+            Utente utenteCreatore = utenteRepository.findByNickname(nicknameCreatore)
+                    .orElseThrow(() -> new RuntimeException("Utente non trovato: " + nicknameCreatore));
+            Abitazione abitazioneCreatore = utenteCreatore.getAbitazione();
+
+            //calcola il punteggio in base a difficoltà e durata
+            int punteggio = calcolaPunteggioGruppo(difficolta, durata);
+
+            //calcola l'obiettivo per ogni abitazione
+            float consumoCreatore = abitazioneCreatore.getConsumoTotale();
+            float obiettivo = calcolaObiettivo(difficolta, durata, consumoCreatore);
+
+            //calcola la data di scadenza
+            LocalDateTime dataCreazione = LocalDateTime.now();
+            LocalDateTime dataScadenza = switch (durata.toUpperCase()) {
+                case "SETTIMANALE" -> dataCreazione.plusWeeks(1);
+                case "MENSILE" -> dataCreazione.plusMonths(1);
+                default -> throw new IllegalArgumentException("Durata non valida");
+            };
+
+            //crea l'id del gruppo
+            Long idGruppo = UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
+
+            //crea la sfida
+            Sfida sfida = new Sfida();
+            sfida.setTipoSfida(true); // Di gruppo
+            sfida.setDifficolta(difficolta);
+            sfida.setDurata(durata);
+            sfida.setPunteggio(punteggio);
+            sfida.setObiettivo(obiettivo);
+            sfida.setDataScadenza(dataScadenza);
+            sfida.setCompletamento(false);
+            sfida.setIdGruppo(idGruppo);
+            sfida.setAttivazione(false);
+            sfida.setNumeroPartecipanti(numeroPartecipanti);
+            sfida.setAbitazionePartecipante(abitazioneCreatore);
+
+            return sfidaRepository.save(sfida);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Errore: " + e.getMessage());
         }
-
-        //calcola il punteggio in base a difficoltà e durata
-        int punteggio = calcolaPunteggioGruppo(difficolta, durata);
-
-        //calcola l'obiettivo per ogni abitazione
-        float consumoCreatore = abitazioneCreatore.getConsumoTotale();
-        float obiettivo = calcolaObiettivo(difficolta, durata, consumoCreatore);
-        for (Abitazione abitazione : abitazioniPartecipanti) {
-            float consumoPartecipante = abitazione.getConsumoTotale();
-            obiettivo += calcolaObiettivo(difficolta, durata, consumoPartecipante);
-        }
-
-        //calcola il numero dei partecipanti
-        int numeroPartecipanti = abitazioniPartecipanti.size() + 1;
-
-        //calcola l'obiettivo della sfida come una media degli obiettivi delle abitazioni partecipanti
-        float obiettivoSfidaGruppo = obiettivo/numeroPartecipanti;
-
-        //calcola la data di scadenza
-        LocalDateTime dataCreazione = LocalDateTime.now();
-        LocalDateTime dataScadenza = switch (durata.toUpperCase()) {
-            case "SETTIMANALE" -> dataCreazione.plusWeeks(1);
-            case "MENSILE" -> dataCreazione.plusMonths(1);
-            default -> throw new IllegalArgumentException("Durata non valida");
-        };
-
-        //crea l'id del gruppo
-        Long idGruppo = UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
-
-        //crea la sfida
-        Sfida sfida = new Sfida();
-        sfida.setTipoSfida(true); // Di gruppo
-        sfida.setDifficolta(difficolta);
-        sfida.setDurata(durata);
-        sfida.setPunteggio(punteggio);
-        sfida.setObiettivo(obiettivoSfidaGruppo);
-        sfida.setDataScadenza(dataScadenza);
-        sfida.setCompletamento(false);
-        sfida.setIdGruppo(idGruppo);
-        sfida.setAttivazione(false);
-        sfida.setNumeroPartecipanti(numeroPartecipanti);
-        sfida.setAbitazionePartecipante(abitazioneCreatore);
-
-        return sfidaRepository.save(sfida);
 
     }
 

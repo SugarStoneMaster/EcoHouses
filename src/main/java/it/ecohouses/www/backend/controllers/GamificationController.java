@@ -2,11 +2,14 @@ package it.ecohouses.www.backend.controllers;
 
 import it.ecohouses.www.backend.services.GamificationService;
 import it.ecohouses.www.backend.model.Sfida;
+import it.ecohouses.www.backend.model.Classifica;
+import it.ecohouses.www.backend.model.ClassificaAbitazione;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,18 +26,21 @@ public class GamificationController {
 
     private final GamificationService gamificationService;
 
-    // Ottiene la classifica locale con le prime 10 abitazioni e la posizione/punteggio dell'utente
+    // Ottiene la classifica locale con le prime 100 abitazioni e la posizione/punteggio dell'utente
     @GetMapping("/classificaLocale")
     public ResponseEntity<?> getClassificaLocale(@RequestParam String nickname) {
         try {
             // Recupera l'ID della classifica locale
-            long idClassificaLocale = gamificationService.getClassificaLocale(nickname);
+            Classifica classificaLocale = gamificationService.getClassificaLocale(nickname);
 
             // Recupera le prime 100 abitazioni della classifica locale
-            List<Object[]> top100Abitazioni = gamificationService.getTop100Abitazioni(idClassificaLocale);
+            List<ClassificaAbitazione> top100Abitazioni = gamificationService.getTop100Abitazioni(classificaLocale.getIdClassifica());
+            if (top100Abitazioni.isEmpty()) {
+                return ResponseEntity.ok("Non ci sono altri utenti nella classifica.");
+            }
 
             // Recupera posizione e punteggio dell'utente nella classifica locale
-            Object[] posizioneEPunteggio = gamificationService.getPosizioneAndPunteggio(nickname, idClassificaLocale);
+            Object[] posizioneEPunteggio = gamificationService.getPosizioneAndPunteggio(nickname, classificaLocale.getIdClassifica());
 
             // Prepara la risposta
             Map<String, Object> response = new HashMap<>();
@@ -43,7 +49,7 @@ public class GamificationController {
 
             return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body("La classifica non è al momento disponibile. Riprova più tardi.");
         }
     }
 
@@ -52,13 +58,13 @@ public class GamificationController {
     public ResponseEntity<?> getClassificaGlobale(@RequestParam String nickname) {
         try {
             // Recupera l'ID della classifica globale
-            long idClassificaGlobale = gamificationService.getClassificaGlobale();
+            Classifica classificaGlobale = gamificationService.getClassificaGlobale();
 
             // Recupera le prime 100 abitazioni della classifica globale
-            List<Object[]> top100Abitazioni = gamificationService.getTop100Abitazioni(idClassificaGlobale);
+            List<ClassificaAbitazione> top100Abitazioni = gamificationService.getTop100Abitazioni(classificaGlobale.getIdClassifica());
 
             // Recupera posizione e punteggio dell'utente nella classifica globale
-            Object[] posizioneEPunteggio = gamificationService.getPosizioneAndPunteggio(nickname, idClassificaGlobale);
+            Object[] posizioneEPunteggio = gamificationService.getPosizioneAndPunteggio(nickname, classificaGlobale.getIdClassifica());
 
             // Prepara la risposta
             Map<String, Object> response = new HashMap<>();
@@ -111,27 +117,23 @@ public class GamificationController {
             String difficolta = (String) richiesta.get("difficolta");
             String durata = (String) richiesta.get("durata");
             String nickname = (String) richiesta.get("nickname");
+            int partecipanti = (int) richiesta.get("partecipanti");
 
-            // Controllo e parsing sicuro della lista partecipanti
-            Object partecipantiObj = richiesta.get("partecipanti");
-            if (partecipantiObj instanceof List<?> listaPartecipanti) {
-
-                // Verifica che tutti gli elementi siano stringhe
-                if (listaPartecipanti.stream().allMatch(element -> element instanceof String)) {
-                    List<String> partecipanti = listaPartecipanti.stream()
-                            .map(element -> (String) element)
-                            .toList();
-
-                    // Chiamata al service con la lista validata
-                    Sfida sfidaDiGruppo = gamificationService.creaSfidaDiGruppo(
-                            difficolta, durata, nickname, partecipanti);
-                    return new ResponseEntity<>(sfidaDiGruppo, HttpStatus.CREATED);
-                } else {
-                    throw new IllegalArgumentException("La lista dei partecipanti contiene elementi non validi.");
-                }
-            } else {
-                throw new IllegalArgumentException("Il campo partecipanti non è una lista.");
+            //verifica che difficoltà e durata siano valide
+            if (!Arrays.asList("FACILE", "MEDIA", "DIFFICILE").contains(difficolta.toUpperCase())) {
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
             }
+            if (!Arrays.asList("SETTIMANALE", "MENSILE").contains(durata.toUpperCase())) {
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            }
+            if (partecipanti < 2) {
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            }
+
+            // Chiamata al service con la lista validata
+            Sfida sfidaDiGruppo = gamificationService.creaSfidaDiGruppo(
+                    difficolta, durata, nickname, partecipanti);
+            return new ResponseEntity<>(sfidaDiGruppo, HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             // Gestione degli errori
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
