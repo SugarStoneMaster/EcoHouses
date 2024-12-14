@@ -3,7 +3,6 @@ package it.ecohouses.www.backend.controllers;
 import it.ecohouses.www.backend.model.DispositivoIoT;
 import it.ecohouses.www.backend.model.SmartMeter;
 import it.ecohouses.www.backend.services.IoTService;
-import org.apache.catalina.LifecycleState;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +32,7 @@ public class IoTController {
     }
 
     @PostMapping(value = "/recupera-dispositivi")
-    public ResponseEntity<?> recuperaDispositivoIoT(@RequestBody  Map<String, Object> requestBody){
+    public ResponseEntity<?> recuperaDispositivoIoT(@RequestBody  Map<String, Object> requestBody) {
 
         String nickname = requestBody.get("nickname").toString();
         System.out.println("Nickname richiesto: " + nickname);

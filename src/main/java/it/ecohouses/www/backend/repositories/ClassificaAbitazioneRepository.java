@@ -16,7 +16,7 @@ public interface ClassificaAbitazioneRepository extends JpaRepository<Classifica
     @Query("SELECT ca.abitazione.nomeCasa, ca.posizione, ca.punteggio FROM ClassificaAbitazione ca " +
             "WHERE ca.classifica.idClassifica = :idClassifica " +
             "ORDER BY ca.posizione ASC")
-    List<Object[]> findTop10ByClassifica(@Param("idClassifica") Long idClassifica);
+    List<Object[]> findTop100ByClassifica(@Param("idClassifica") Long idClassifica);
 
     @Query("SELECT ca.posizione, ca.punteggio " +
             "FROM ClassificaAbitazione ca " +

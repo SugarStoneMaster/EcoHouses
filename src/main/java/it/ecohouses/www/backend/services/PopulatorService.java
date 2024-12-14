@@ -36,6 +36,7 @@ public class PopulatorService {
     @Transactional
     public void populate() {
         log.info("Populating database...");
+        /*
 
         LocalDateTime startOfYear = LocalDateTime.now().withDayOfYear(1).truncatedTo(ChronoUnit.DAYS);
         LocalDateTime endOfYear = startOfYear.plusYears(1);
@@ -47,7 +48,7 @@ public class PopulatorService {
         gestore.setAbitazione(abitazione);
         utenteRepository.save(gestore);
 
-        for(i = 0; i < 30; i++) {
+        for (i = 0; i < 30; i++) {
             double randomProduzione = ThreadLocalRandom.current().nextDouble(5.0, 50.0); // Produzione casuale tra 5 e 50 kWh
             LocalDateTime randomDate = randomDateBetween(startOfYear, endOfYear);
 
@@ -350,6 +351,9 @@ public class PopulatorService {
 
         ClassificaAbitazione classificaAbitazioniGlobale = new ClassificaAbitazione(classificaGlobale, abitazione, 1, 100);
         classificaAbitazioneRepository.save(classificaAbitazioniGlobale);
+
+
+         */
 
 
         log.info("Database populated with utenti e gestori.");

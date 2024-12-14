@@ -1,7 +1,5 @@
 package it.ecohouses.www.backend.controllers;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import it.ecohouses.www.backend.model.Abitazione;
 import it.ecohouses.www.backend.model.ConsumoEnergetico;
 import it.ecohouses.www.backend.model.ProduzioneEnergia;
 import it.ecohouses.www.backend.services.DashboardService;

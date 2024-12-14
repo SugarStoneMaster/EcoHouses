@@ -25,5 +25,5 @@ public class Commento {
 
     private String testo;
 
-    private int numeroLike = 0;
+    private int numeroLike;
 }
