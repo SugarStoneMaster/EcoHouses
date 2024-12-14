@@ -20,10 +20,10 @@ public class IoTController {
         this.iotService = iotService;
     }
 
-    @PostMapping(value = "/registraDispositivoIoT")
-    public ResponseEntity<?> registraDispositivoIoT(@RequestBody  DispositivoIoT dispositivoIoT) {
+    @PostMapping(value = "/aggiungiDispositivoIoT")
+    public ResponseEntity<?> aggiungDispositivoIoT(@RequestBody  DispositivoIoT dispositivoIoT) {
         try {
-            DispositivoIoT nuovoDispositivo = iotService.registraDispositivoIoT(dispositivoIoT);
+            DispositivoIoT nuovoDispositivo = iotService.aggiungiDispositivoIoT(dispositivoIoT);
             return new ResponseEntity<>(nuovoDispositivo, HttpStatus.CREATED);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -32,7 +32,7 @@ public class IoTController {
     }
 
     @PostMapping(value = "/recupera-dispositivi")
-    public ResponseEntity<?> recuperaDispositivoIoT(@RequestBody  Map<String, Object> requestBody) {
+    public ResponseEntity<?> recuperaDispositivoIoT(@RequestBody  Map<String, Object> requestBody){
 
         String nickname = requestBody.get("nickname").toString();
         System.out.println("Nickname richiesto: " + nickname);
@@ -41,7 +41,7 @@ public class IoTController {
         return new ResponseEntity<>(dispositivi, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/LoginSmartMeter")
+    @PostMapping(value = "/loginSmartMeter")
     public ResponseEntity<?> login(@RequestBody SmartMeter smartMeter) {
         try {
             String email = smartMeter.getEmail();
@@ -55,7 +55,7 @@ public class IoTController {
 
             // Validazione finta
             if (email.equals(email) && password.equals(password)) {
-                DispositivoIoT nuovoDispositivo = iotService.registraDispositivoIoT(sMeter);
+                DispositivoIoT nuovoDispositivo = iotService.aggiungiDispositivoIoT(sMeter);
                 return new ResponseEntity<>(nuovoDispositivo, HttpStatus.CREATED);
 
             } else {
@@ -73,5 +73,3 @@ public class IoTController {
         }
     }
 }
-
-

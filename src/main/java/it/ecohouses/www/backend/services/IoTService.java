@@ -22,7 +22,7 @@ public class IoTService {
     }
 
     @Transactional
-    public DispositivoIoT registraDispositivoIoT(DispositivoIoT dispositivoIoT) {
+    public DispositivoIoT aggiungiDispositivoIoT(DispositivoIoT dispositivoIoT) {
 
         if (dispositivoIoTRepository.existsByNumeroSerie(dispositivoIoT.getNumeroSerie())) {
             throw new IllegalArgumentException("Dispositivo già registrato.");
@@ -51,7 +51,7 @@ public class IoTService {
     }
 
     @Transactional
-    public List<DispositivoIoT> retriveDispositivi(String nickname) {
+    public List<DispositivoIoT> retriveDispositivi(String nickname){
         List<DispositivoIoT> listaDispositivi = dispositivoIoTRepository.findDispositiviByNickname(nickname);
         return listaDispositivi;
     }
