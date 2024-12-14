@@ -21,7 +21,7 @@ public class IoTController {
     }
 
     @PostMapping(value = "/aggiungiDispositivoIoT")
-    public ResponseEntity<?> aggiungDispositivoIoT(@RequestBody  DispositivoIoT dispositivoIoT) {
+    public ResponseEntity<?> aggiungiDispositivoIoT(@RequestBody  DispositivoIoT dispositivoIoT) {
         try {
             DispositivoIoT nuovoDispositivo = iotService.aggiungiDispositivoIoT(dispositivoIoT);
             return new ResponseEntity<>(nuovoDispositivo, HttpStatus.CREATED);
