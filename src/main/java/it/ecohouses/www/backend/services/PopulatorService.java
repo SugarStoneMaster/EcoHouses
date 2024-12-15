@@ -36,7 +36,7 @@ public class PopulatorService {
     @Transactional
     public void populate() {
         log.info("Populating database...");
-
+        /*
         LocalDateTime startOfYear = LocalDateTime.now().withDayOfYear(1).truncatedTo(ChronoUnit.DAYS);
         LocalDateTime endOfYear = startOfYear.plusYears(1);
 
@@ -351,7 +351,7 @@ public class PopulatorService {
         ClassificaAbitazione classificaAbitazioniGlobale = new ClassificaAbitazione(classificaGlobale, abitazione, 1, 100);
         classificaAbitazioneRepository.save(classificaAbitazioniGlobale);
 
-        log.info("Database populated with utenti e gestori.");
+        log.info("Database populated with utenti e gestori.");*/
     }
 
     private LocalDateTime randomDateBetween(LocalDateTime start, LocalDateTime end) {

@@ -1,13 +1,8 @@
 package it.ecohouses.www.backend.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.*;
+import lombok.*;
 
 import java.util.Objects;
 
@@ -24,23 +19,29 @@ public class Abitazione {
     private Long idAbitazione;
 
     @NotBlank(message = "Il nome della casa non può essere vuoto")
+    //@Size(max = 20, message = "Il nome della casa può essere al massimo di 20 caratteri")
     @Column(nullable = false, unique = true)
     private String nomeCasa;
 
+    //@Pattern(regexp = ".*\\.(png|jpg)$", message = "L'immagine deve essere in formato .png o .jpg")
     @Column
     private String immagine;
 
     @NotNull(message = "La metratura non può essere nulla")
-    @Positive(message = "La metratura deve essere un valore positivo")
+    @Min(value = 10, message = "La metratura deve essere almeno 10 mq")
     @Column(nullable = false)
     private float metratura;
 
     @NotBlank(message = "La classe energetica non può essere vuota")
+    /*@Pattern(
+            regexp = "A4|A3|A2|A1|B|C|D|E|F|G",
+            message = "La classe energetica deve essere un valore tra A4, A3, A2, A1, B, C, D, E, F, G"
+    )*/
     @Column(nullable = false)
     private String classeEnergetica;
 
     @NotNull(message = "Il numero di persone non può essere nullo")
-    @Positive(message = "Il numero di persone deve essere un valore positivo")
+   // @Min(value = 1, message = "La casa deve contenere almeno una persona")
     @Column(nullable = false)
     private int numeroPersone;
 
