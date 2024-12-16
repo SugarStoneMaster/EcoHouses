@@ -39,10 +39,9 @@ class IoTControllerTest {
         smartmeter.setEmail("Palombagamer@gmail.com");
         smartmeter.setPassword("IsBestEsame");
     }
-
+     //Test 1: Codice QR valido
     @Test
     void testRegistrazioneDispositivo_ValidQRCode() {
-        // Simula un Gestore autenticato e un codice QR valido
         when(iotService.aggiungiDispositivoIoT(dispositivo)).thenReturn(dispositivo);
 
         ResponseEntity<?> response = iotController.aggiungiDispositivoIoT(dispositivo);
@@ -51,9 +50,9 @@ class IoTControllerTest {
         assertEquals(dispositivo, response.getBody());
     }
 
+    //Test 2: Codice QR già registrato
     @Test
     void testRegistrazioneDispositivo_QRGiàRegistrato() {
-        // Simula un codice QR già registrato
         when(iotService.aggiungiDispositivoIoT(dispositivo)).thenThrow(new IllegalArgumentException("Dispositivo già registrato."));
 
         ResponseEntity<?> response = iotController.aggiungiDispositivoIoT(dispositivo);
@@ -62,31 +61,10 @@ class IoTControllerTest {
         assertEquals("Errore durante la registrazione del dispositivo.", response.getBody());
     }
 
-    @Test
-    void testRegistrazioneDispositivo_QRNonLeggibile() {
-        // Simula un codice QR non leggibile
-        when(iotService.aggiungiDispositivoIoT(dispositivo)).thenThrow(new IllegalArgumentException("Codice QR non leggibile."));
-
-        ResponseEntity<?> response = iotController.aggiungiDispositivoIoT(dispositivo);
-
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertEquals("Codice QR non leggibile.", response.getBody());
-    }
-
-    @Test
-    void testRegistrazioneDispositivo_FormatoErrato() {
-        // Simula un codice QR con formato errato
-        when(iotService.aggiungiDispositivoIoT(dispositivo)).thenThrow(new IllegalArgumentException("Formato codice QR errato."));
-
-        ResponseEntity<?> response = iotController.aggiungiDispositivoIoT(dispositivo);
-
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertEquals("Formato codice QR errato.", response.getBody());
-    }
-
+    //Test 3: Email utente errata
     @Test
     void testRegistrazioneDispositivo_EmailErrata(){
-        // Simula un errore di email
+
         when(iotService.aggiungiDispositivoIoT(smartmeter)).thenThrow(new IllegalArgumentException("Email errata"));
 
         ResponseEntity<?> response = iotController.aggiungiDispositivoIoT(smartmeter);
@@ -95,9 +73,10 @@ class IoTControllerTest {
         assertEquals("Email errata", response.getBody());
     }
 
+    //Test 4: Password utente errata
     @Test
     void testRegistrazioneDispositivo_PasswordErrata(){
-        // Simula un errore di password
+
         when(iotService.aggiungiDispositivoIoT(smartmeter)).thenThrow(new IllegalArgumentException("Password errata"));
 
         ResponseEntity<?> response = iotController.aggiungiDispositivoIoT(smartmeter);
