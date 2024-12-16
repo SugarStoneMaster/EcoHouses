@@ -54,8 +54,14 @@ class UtenteControllerTest {
         validUtente.setAbitazione(validAbitazione);
     }
 
+    @Test //TC_RG_1
+    void testGestoreValido(){
 
-    @Test
+        ResponseEntity<Map<String, Object>>  response = utenteController.registrazioneUtente(validUtente);
+        assertEquals(201, response.getStatusCodeValue());
+    }
+
+    @Test //TC_RG_2
     void testEmailNonValida() {
         validUtente.setEmail("invalidEmail");
 
@@ -65,7 +71,18 @@ class UtenteControllerTest {
         assertEquals(500, response.getStatusCodeValue());
     }
 
-    @Test
+    @Test //TC_RG_2
+    void testEmailGiaInUso() {
+        validUtente.setEmail("invalidEmail");
+
+        when(utenteService.registrazioneGestore(validUtente)).thenThrow(new IllegalArgumentException("Email già utilizzata."));
+        ResponseEntity<Map<String, Object>>  response = utenteController.registrazioneUtente(validUtente);
+
+        assertEquals(500, response.getStatusCodeValue());
+    }
+
+
+    @Test //TC_RG_3
     void testPasswordNonValida() {
         validUtente.setPassword("short");
 
@@ -76,7 +93,7 @@ class UtenteControllerTest {
         assertEquals(500, response.getStatusCodeValue());
     }
 
-    @Test
+    @Test //TC_RG_5
     void testNicknameNonValido() {
         validUtente.setNickname("short");
 
@@ -87,7 +104,7 @@ class UtenteControllerTest {
         assertEquals(500, response.getStatusCodeValue());
     }
 
-    @Test
+    @Test //TC_RG_5
     void testRegistrazioneNicknameGiaInUso() {
         validUtente.setNickname("existingNickname");
         // Simuliamo che il nickname sia già esistente nel database nel servizio
@@ -99,7 +116,7 @@ class UtenteControllerTest {
         // Verifica che il messaggio di errore sia corretto
     }
 
-    @Test
+    @Test //TC_RG_6
     void testRuoloNonValido() {
         validUtente.setGestore(false);  // Ruolo invalido
 
@@ -110,7 +127,7 @@ class UtenteControllerTest {
         assertEquals(500, response.getStatusCodeValue());
     }
 
-    @Test
+    @Test //TC_RG_7
     void testNomeCasaNonValido() {
         validAbitazione.setNomeCasa("CasaSuperLongaPiùDiVenticarri");
 
@@ -121,7 +138,7 @@ class UtenteControllerTest {
         assertEquals(500, response.getStatusCodeValue());
     }
 
-    @Test
+    @Test //TC_RG_9
     void testMetraturaNonValida() {
         validAbitazione.setMetratura(5);  // Metratura inferiore a 10
 
@@ -132,7 +149,7 @@ class UtenteControllerTest {
         assertEquals(500, response.getStatusCodeValue());
     }
 
-    @Test
+    @Test //TC_RG_10
     void testNumeroPersoneNonValido() {
         validAbitazione.setNumeroPersone(0);  // Numero di persone inferiore a 1
 
@@ -143,7 +160,7 @@ class UtenteControllerTest {
         assertEquals(500, response.getStatusCodeValue());
     }
 
-    @Test
+    @Test //TC_RG_11
     void testClasseEnergeticaNonValida() {
         validAbitazione.setClasseEnergetica("H");
 
@@ -154,7 +171,7 @@ class UtenteControllerTest {
         assertEquals(500, response.getStatusCodeValue());
     }
 
-    @Test
+    @Test //TC_RG_12
     void testImmagineNonValida() {
         validAbitazione.setImmagine("invalid.bmp");
 

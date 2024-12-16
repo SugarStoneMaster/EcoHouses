@@ -50,7 +50,7 @@ public class DashboardControllerTest {
         return requestBody;
     }
 
-    // Test Case 1: Dati completi per il consumo giornaliero e la media locale disponibile
+    //TC_D1_1: Dati completi per il consumo giornaliero e la media locale disponibile
     @Test
     public void testGetConsumiAndMediaConsumi_CompleteData() {
         Long abitazioneId = 1L;
@@ -78,7 +78,7 @@ public class DashboardControllerTest {
         assertEquals(80.0, mediaConsumiResult);
     }
 
-    // Test Case 2: Visualizzazione completa dei dati settimanali dell’utente e della media locale
+    // TC_D1_2: Visualizzazione completa dei dati settimanali dell’utente e della media locale
     @Test
     public void testGetConsumiAndMediaConsumi_WeeklyData_Full() {
         Long abitazioneId = 1L;
@@ -106,7 +106,7 @@ public class DashboardControllerTest {
         assertEquals(80.0, mediaConsumiResult);
     }
 
-    // Test Case 3: Visualizzazione completa dei dati mensili dell’utente e della media locale
+    // TC_D1_3: Visualizzazione completa dei dati mensili dell’utente e della media locale
     @Test
     public void testGetConsumiAndMediaConsumi_MonthlyData_Full() {
         Long abitazioneId = 1L;
@@ -134,7 +134,7 @@ public class DashboardControllerTest {
         assertEquals(80.0, mediaConsumiResult);
     }
 
-    // Test Case 4: Dati parziali per il consumo giornaliero e la media locale disponibile
+    // TC_D1_4: Dati parziali per il consumo giornaliero e la media locale disponibile
     @Test
     public void testGetConsumiAndMediaConsumi_PartialData() {
         Long abitazioneId = 1L;
@@ -162,7 +162,7 @@ public class DashboardControllerTest {
         assertEquals(70.0, mediaConsumiResult);
     }
 
-    // Test Case 5: Visualizzazione parziale dei dati settimanali dell’utente con nota sull’incompletezza
+    // TC_D1_5: Visualizzazione parziale dei dati settimanali dell’utente con nota sull’incompletezza
     @Test
     public void testGetConsumiAndMediaConsumi_WeeklyData_Partial() {
         Long abitazioneId = 1L;
@@ -190,7 +190,7 @@ public class DashboardControllerTest {
         assertEquals(70.0, mediaConsumiResult);
     }
 
-    // Test Case 6: Visualizzazione parziale dei dati mensili dell’utente con nota sull’incompletezza
+    // TC_D1_6: Visualizzazione parziale dei dati mensili dell’utente con nota sull’incompletezza
     @Test
     public void testGetConsumiAndMediaConsumi_MonthlyData_Partial() {
         Long abitazioneId = 1L;
@@ -218,7 +218,7 @@ public class DashboardControllerTest {
         assertEquals(70.0, mediaConsumiResult);
     }
 
-    // Test Case 7: Nessun dato di consumo disponibile
+    // TC_D1_7: Nessun dato di consumo disponibile
     @Test
     public void testGetConsumi_NoData() {
         Long abitazioneId = 1L;
@@ -237,7 +237,7 @@ public class DashboardControllerTest {
         assertNull(consumiResult);
     }
 
-    // Test Case 8: Nessun dato della media locale disponibile
+    // TC_D1_8: Nessun dato della media locale disponibile
     @Test
     public void testGetMediaConsumi_NoMediaLocale() {
         Long abitazioneId = 1L;
@@ -256,7 +256,7 @@ public class DashboardControllerTest {
         assertNull(mediaConsumiResult);
     }
 
-    // Test Case 9: Dati parziali e nessun dato della media locale disponibile
+    // TC_D1_9: Dati parziali e nessun dato della media locale disponibile
     @Test
     public void testGetConsumiAndMediaConsumi_PartialData_NoMediaLocale() {
         Long abitazioneId = 1L;
@@ -283,8 +283,4 @@ public class DashboardControllerTest {
         Double mediaConsumiResult = dashboardController.getMediaConsumi(requestBody);
         assertNull(mediaConsumiResult);
     }
-
-
-
-
 }
