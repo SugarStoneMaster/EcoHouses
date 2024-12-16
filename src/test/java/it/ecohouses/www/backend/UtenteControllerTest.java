@@ -59,10 +59,8 @@ class UtenteControllerTest {
     void testEmailNonValida() {
         validUtente.setEmail("invalidEmail");
 
-        //when(utenteService.registrazioneGestore(validUtente)).thenThrow(new IllegalArgumentException("Email non valida."));
-        System.out.println(validUtente.getEmail());
+        when(utenteService.registrazioneGestore(validUtente)).thenThrow(new IllegalArgumentException("Email non valida."));
         ResponseEntity<Map<String, Object>>  response = utenteController.registrazioneUtente(validUtente);
-        System.out.println(response);
 
         assertEquals(500, response.getStatusCodeValue());
     }
