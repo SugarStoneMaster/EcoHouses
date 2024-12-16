@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface ClassificaRepository extends JpaRepository<Classifica, Long> {
 
-    @Query("SELECT c.idClassifica FROM Classifica c " +
+    @Query("SELECT c FROM Classifica c " +
             "WHERE c.comune = :comune " +
             "AND c.tipoClassifica = true " +
             "ORDER BY c.dataCreazione DESC")

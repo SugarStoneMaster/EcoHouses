@@ -75,6 +75,20 @@ public class GamificationService {
 
     }
 
+    //verifica se l'utente è l'unico in classifica locale, restituisce true in caso affermativo
+    public boolean isUtenteUnicoInClassificaLocale(String nickname, List<ClassificaAbitazione> top100Abitazioni) {
+        // Recupera l'abitazione dell'utente in base al nickname
+        Optional<Utente> utenteOpt = utenteRepository.findByNickname(nickname);
+        if (utenteOpt.isPresent()) {
+            Utente utente = utenteOpt.get();
+            Long idAbitazione = utente.getAbitazione().getIdAbitazione();
+
+            // Verifica se la lista contiene un solo elemento ed è l'abitazione dell'utente
+            return top100Abitazioni.size() == 1 && top100Abitazioni.get(0).getAbitazione().getIdAbitazione().equals(idAbitazione);
+        }
+        return false;
+    }
+
 
     /**
      * Ottiene la posizione e il punteggio dell'abitazione dell'utente in una classifica

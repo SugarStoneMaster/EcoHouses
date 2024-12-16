@@ -32,11 +32,17 @@ public class GamificationController {
         try {
             // Recupera l'ID della classifica locale
             Classifica classificaLocale = gamificationService.getClassificaLocale(nickname);
-
+            
             // Recupera le prime 100 abitazioni della classifica locale
             List<ClassificaAbitazione> top100Abitazioni = gamificationService.getTop100Abitazioni(classificaLocale.getIdClassifica());
+            // Verifica se la lista è vuota
             if (top100Abitazioni.isEmpty()) {
                 return ResponseEntity.ok("Non ci sono altri utenti nella classifica.");
+            }
+
+            // Verifica se la lista contiene solo l'utente
+            if (gamificationService.isUtenteUnicoInClassificaLocale(nickname, top100Abitazioni)) {
+                return ResponseEntity.ok("Non ci sono altri utnti in classifica");
             }
 
             // Recupera posizione e punteggio dell'utente nella classifica locale
@@ -111,7 +117,7 @@ public class GamificationController {
     }
 
     @PostMapping(value = "/creaSfidaDiGruppo")
-    public ResponseEntity<Sfida> creaSfidaDiGruppo(@RequestBody Map<String, Object> richiesta) {
+    public ResponseEntity<?> creaSfidaDiGruppo(@RequestBody Map<String, Object> richiesta) {
         try {
             // Estrazione dei parametri dalla mappa
             String difficolta = (String) richiesta.get("difficolta");
@@ -121,13 +127,15 @@ public class GamificationController {
 
             //verifica che difficoltà e durata siano valide
             if (!Arrays.asList("FACILE", "MEDIA", "DIFFICILE").contains(difficolta.toUpperCase())) {
-                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("Livello di difficoltà non selezionato", HttpStatus.BAD_REQUEST);
             }
             if (!Arrays.asList("SETTIMANALE", "MENSILE").contains(durata.toUpperCase())) {
-                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("Tipo di durata non selezionato", HttpStatus.BAD_REQUEST);
             }
+
+            //verifica che il numero di partecipanti non sia inferiore a due, o un campo vuoto
             if (partecipanti < 2) {
-                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("Numero di partecipanti non valido", HttpStatus.BAD_REQUEST);
             }
 
             // Chiamata al service con la lista validata
@@ -136,7 +144,7 @@ public class GamificationController {
             return new ResponseEntity<>(sfidaDiGruppo, HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             // Gestione degli errori
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Errore nel creare la sfida.", HttpStatus.BAD_REQUEST);
         }
     }
 

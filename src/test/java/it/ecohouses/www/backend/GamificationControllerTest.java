@@ -116,11 +116,11 @@ class GamificationControllerTest {
         mockSfida.setDifficolta("FACILE");
         when(gamificationService.creaSfidaDiGruppo("FACILE", "SETTIMANALE", "utente1", 3)).thenReturn(mockSfida);
 
-        ResponseEntity<Sfida> response = gamificationController.creaSfidaDiGruppo(richiesta);
+        ResponseEntity<?> response = gamificationController.creaSfidaDiGruppo(richiesta);
 
         assertEquals(201, response.getStatusCodeValue());
         assertNotNull(response.getBody());
-        Sfida sfida = response.getBody();
+        Sfida sfida = (Sfida) response.getBody();
         assertEquals("SETTIMANALE", sfida.getDurata());
         assertEquals("FACILE", sfida.getDifficolta());
     }
@@ -139,11 +139,11 @@ class GamificationControllerTest {
         mockSfida.setDifficolta("MEDIA");
         when(gamificationService.creaSfidaDiGruppo("MEDIA", "SETTIMANALE", "utente2", 3)).thenReturn(mockSfida);
 
-        ResponseEntity<Sfida> response = gamificationController.creaSfidaDiGruppo(richiesta);
+        ResponseEntity<?> response = gamificationController.creaSfidaDiGruppo(richiesta);
 
         assertEquals(201, response.getStatusCodeValue());
         assertNotNull(response.getBody());
-        Sfida sfida = response.getBody();
+        Sfida sfida = (Sfida) response.getBody();
         assertEquals("SETTIMANALE", sfida.getDurata());
         assertEquals("MEDIA", sfida.getDifficolta());
     }
@@ -162,11 +162,11 @@ class GamificationControllerTest {
         mockSfida.setDifficolta("DIFFICILE");
         when(gamificationService.creaSfidaDiGruppo("DIFFICILE", "SETTIMANALE", "utente3", 3)).thenReturn(mockSfida);
 
-        ResponseEntity<Sfida> response = gamificationController.creaSfidaDiGruppo(richiesta);
+        ResponseEntity<?> response = gamificationController.creaSfidaDiGruppo(richiesta);
 
         assertEquals(201, response.getStatusCodeValue());
         assertNotNull(response.getBody());
-        Sfida sfida = response.getBody();
+        Sfida sfida = (Sfida) response.getBody();
         assertEquals("SETTIMANALE", sfida.getDurata());
         assertEquals("DIFFICILE", sfida.getDifficolta());
     }
@@ -185,11 +185,11 @@ class GamificationControllerTest {
         mockSfida.setDifficolta("FACILE");
         when(gamificationService.creaSfidaDiGruppo("FACILE", "MENSILE", "utente4", 3)).thenReturn(mockSfida);
 
-        ResponseEntity<Sfida> response = gamificationController.creaSfidaDiGruppo(richiesta);
+        ResponseEntity<?> response = gamificationController.creaSfidaDiGruppo(richiesta);
 
         assertEquals(201, response.getStatusCodeValue());
         assertNotNull(response.getBody());
-        Sfida sfida = response.getBody();
+        Sfida sfida = (Sfida) response.getBody();
         assertEquals("MENSILE", sfida.getDurata());
         assertEquals("FACILE", sfida.getDifficolta());
     }
@@ -208,11 +208,11 @@ class GamificationControllerTest {
         mockSfida.setDifficolta("MEDIA");
         when(gamificationService.creaSfidaDiGruppo("MEDIA", "MENSILE", "utente5", 3)).thenReturn(mockSfida);
 
-        ResponseEntity<Sfida> response = gamificationController.creaSfidaDiGruppo(richiesta);
+        ResponseEntity<?> response = gamificationController.creaSfidaDiGruppo(richiesta);
 
         assertEquals(201, response.getStatusCodeValue());
         assertNotNull(response.getBody());
-        Sfida sfida = response.getBody();
+        Sfida sfida = (Sfida) response.getBody();
         assertEquals("MENSILE", sfida.getDurata());
         assertEquals("MEDIA", sfida.getDifficolta());
     }
@@ -231,11 +231,11 @@ class GamificationControllerTest {
         mockSfida.setDifficolta("DIFFICILE");
         when(gamificationService.creaSfidaDiGruppo("DIFFICILE", "MENSILE", "utente6", 3)).thenReturn(mockSfida);
 
-        ResponseEntity<Sfida> response = gamificationController.creaSfidaDiGruppo(richiesta);
+        ResponseEntity<?> response = gamificationController.creaSfidaDiGruppo(richiesta);
 
         assertEquals(201, response.getStatusCodeValue());
         assertNotNull(response.getBody());
-        Sfida sfida = response.getBody();
+        Sfida sfida = (Sfida) response.getBody();
         assertEquals("MENSILE", sfida.getDurata());
         assertEquals("DIFFICILE", sfida.getDifficolta());
     }
@@ -249,7 +249,7 @@ class GamificationControllerTest {
                 "partecipanti", 3
         );
 
-        ResponseEntity<Sfida> response = gamificationController.creaSfidaDiGruppo(richiesta);
+        ResponseEntity<?> response = gamificationController.creaSfidaDiGruppo(richiesta);
 
         assertEquals(400, response.getStatusCodeValue());
     }
@@ -263,7 +263,7 @@ class GamificationControllerTest {
                 "partecipanti", 3
         );
 
-        ResponseEntity<Sfida> response = gamificationController.creaSfidaDiGruppo(richiesta);
+        ResponseEntity<?> response = gamificationController.creaSfidaDiGruppo(richiesta);
 
         assertEquals(400, response.getStatusCodeValue());
     }
@@ -277,10 +277,11 @@ class GamificationControllerTest {
                 "partecipanti", 1
         );
 
-        ResponseEntity<Sfida> response = gamificationController.creaSfidaDiGruppo(richiesta);
+        ResponseEntity<?> response = gamificationController.creaSfidaDiGruppo(richiesta);
 
         assertEquals(400, response.getStatusCodeValue());
     }
+
 
 }
 

@@ -37,6 +37,7 @@ public class PopulatorService {
     public void populate() {
         log.info("Populating database...");
 
+
         LocalDateTime startOfYear = LocalDateTime.now().withDayOfYear(1).truncatedTo(ChronoUnit.DAYS);
         LocalDateTime endOfYear = startOfYear.plusYears(1);
 
@@ -344,12 +345,23 @@ public class PopulatorService {
 
         ClassificaAbitazione classificaAbitazioniFisiciano = new ClassificaAbitazione(classificaLocaleFisciano, abitazione1, 1, 100);
         classificaAbitazioneRepository.save(classificaAbitazioniFisiciano);
+        ClassificaAbitazione classificaAbitazioniFisiciano2 = new ClassificaAbitazione(classificaLocaleFisciano, abitazione9, 2, 90);
+        classificaAbitazioneRepository.save(classificaAbitazioniFisiciano2);
+        ClassificaAbitazione classificaAbitazioniFisiciano3 = new ClassificaAbitazione(classificaLocaleFisciano, abitazione6, 3, 80);
+        classificaAbitazioneRepository.save(classificaAbitazioniFisiciano3);
+
+        Classifica classificaLocaleSalerno = new Classifica(true, LocalDate.now(), null, "Salerno");
+        classificaRepository.save(classificaLocaleSalerno);
+        ClassificaAbitazione classificaAbitazioneSalerno = new ClassificaAbitazione(classificaLocaleSalerno, abitazione10, 1, 100);
+        classificaAbitazioneRepository.save(classificaAbitazioneSalerno);
 
         Classifica classificaGlobale = new Classifica(false, LocalDate.now(), null, null);
         classificaRepository.save(classificaGlobale);
 
         ClassificaAbitazione classificaAbitazioniGlobale = new ClassificaAbitazione(classificaGlobale, abitazione, 1, 100);
         classificaAbitazioneRepository.save(classificaAbitazioniGlobale);
+
+
 
         log.info("Database populated with utenti e gestori.");
     }
@@ -360,6 +372,7 @@ public class PopulatorService {
         long randomEpoch = ThreadLocalRandom.current().nextLong(startEpoch, endEpoch);
         return LocalDateTime.ofEpochSecond(randomEpoch, 0, java.time.ZoneOffset.UTC);
     }
+
 
 }
 
