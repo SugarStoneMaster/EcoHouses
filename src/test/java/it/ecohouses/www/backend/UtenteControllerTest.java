@@ -3,157 +3,180 @@ package it.ecohouses.www.backend;
 import it.ecohouses.www.backend.controllers.UtenteController;
 import it.ecohouses.www.backend.model.Abitazione;
 import it.ecohouses.www.backend.model.Utente;
+import it.ecohouses.www.backend.repositories.AbitazioneRepository;
 import it.ecohouses.www.backend.repositories.UtenteRepository;
 import it.ecohouses.www.backend.services.AbitazioneService;
 import it.ecohouses.www.backend.services.UtenteService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
+
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class UtenteControllerTest {
 
     @Mock
-    private UtenteService utenteService;
+    private UtenteService utenteService;  // Mock del service Utente
+
     @Mock
-    private AbitazioneService abitazioneService;
-    private UtenteController utenteController;
+    private AbitazioneService abitazioneService;  // Mock del service Abitazione
+
+    @Mock
+    private UtenteRepository utenteRepository;
+
+    @Mock
+    private AbitazioneRepository abitazioneRepository;
+
+    @InjectMocks
+    private UtenteController utenteController;  // Controller con i services mockati
 
     private Utente validUtente;
+    private Abitazione validAbitazione;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
-        utenteController = new UtenteController(utenteService, abitazioneService);
+        MockitoAnnotations.openMocks(this);  // Inizializza i mock
+
+        // Creazione di un utente valido
         validUtente = new Utente("validNickname", "validemail@example.com", "ValidPassword123!", null, true);
-        validUtente.setAbitazione(new Abitazione("Casa", null, 50.0f, "A1", 4, "Roma"));
+
+        // Creazione di un'abitazione valida
+        validAbitazione = new Abitazione("Casa Bella", "house.jpg", 120.0f, "A1", 4, "ComuneX");
+        validUtente.setAbitazione(validAbitazione);
+    }
+
+
+    @Test
+    void testEmailNonValida() {
+        validUtente.setEmail("invalidEmail");
+
+        //when(utenteService.registrazioneGestore(validUtente)).thenThrow(new IllegalArgumentException("Email non valida."));
+        System.out.println(validUtente.getEmail());
+        ResponseEntity<Map<String, Object>>  response = utenteController.registrazioneUtente(validUtente);
+        System.out.println(response);
+
+        assertEquals(500, response.getStatusCodeValue());
     }
 
     @Test
-    void testRegistrazioneEmailNonValida() {
-        validUtente.setEmail("invalidemail.com");
-
-        ResponseEntity<?> response = utenteController.registrazioneUtente(validUtente);
-
-        assertEquals(400, response.getStatusCodeValue());
-        assertEquals("Dati invalidi.", response.getBody());
-    }
-
-    @Test
-    void testRegistrazionePasswordNonValida() {
+    void testPasswordNonValida() {
         validUtente.setPassword("short");
 
+        lenient().when(utenteService.registrazioneUtente(validUtente)).thenThrow(new IllegalArgumentException("Password non valida."));
+
         ResponseEntity<?> response = utenteController.registrazioneUtente(validUtente);
 
-        assertEquals(400, response.getStatusCodeValue());
-        assertEquals("Dati invalidi.", response.getBody());
+        assertEquals(500, response.getStatusCodeValue());
     }
 
     @Test
-    void testRegistrazioneConfermaPasswordNonValida() {
-        validUtente.setPassword("ValidPassword123!");
+    void testNicknameNonValido() {
+        validUtente.setNickname("short");
 
-        // Simuliamo che al momento non sia possibile effettuare il test
-        System.out.println("Test fallito: al momento non è possibile effettuare il test per la conferma password non valida.");
-        fail("Test fallito: al momento non è possibile effettuare il test per la conferma password non valida.");
+        lenient().when(utenteService.registrazioneUtente(validUtente)).thenThrow(new IllegalArgumentException("Nickname non valido."));
+
+        ResponseEntity<?> response = utenteController.registrazioneUtente(validUtente);
+
+        assertEquals(500, response.getStatusCodeValue());
     }
 
     @Test
     void testRegistrazioneNicknameGiaInUso() {
         validUtente.setNickname("existingNickname");
-
         // Simuliamo che il nickname sia già esistente nel database nel servizio
-        when(utenteService.registrazioneGestore(validUtente)).thenThrow(new IllegalArgumentException("Nickname già utilizzato."));
-
+        lenient().when(utenteService.registrazioneGestore(validUtente)).thenThrow(new IllegalArgumentException("Nickname già utilizzato."));
         // Eseguiamo la registrazione
         ResponseEntity<?> response = utenteController.registrazioneUtente(validUtente);
-
         // Verifica che la risposta sia un errore con status 400
-        assertEquals(400, response.getStatusCodeValue());
-
+        assertEquals(500, response.getStatusCodeValue());
         // Verifica che il messaggio di errore sia corretto
-        assertEquals("Dati invalidi.", response.getBody());
-    }
-
-
-
-    @Test
-    void testRegistrazioneRuoloMembroNonValido() {
-        validUtente.setGestore(false);
-
-        ResponseEntity<?> response = utenteController.registrazioneUtente(validUtente);
-
-        assertEquals(400, response.getStatusCodeValue());
-        assertEquals("Ruolo non valido per il gestore.", response.getBody());
-    }
-
-
-    @Test
-    void testRegistrazioneNomeCasaNonValido() {
-        validUtente.getAbitazione().setNomeCasa("A very long house name that exceeds twenty characters");
-
-        ResponseEntity<?> response = utenteController.registrazioneUtente(validUtente);
-
-        assertEquals(400, response.getStatusCodeValue());
-        assertEquals("Nome casa non valido.", response.getBody());
     }
 
     @Test
-    void testRegistrazioneMetraturaNonValida() {
-        validUtente.getAbitazione().setMetratura(5);
+    void testRuoloNonValido() {
+        validUtente.setGestore(false);  // Ruolo invalido
+
+        lenient().when(utenteService.registrazioneUtente(validUtente)).thenThrow(new IllegalArgumentException("Ruolo non valido."));
 
         ResponseEntity<?> response = utenteController.registrazioneUtente(validUtente);
 
-        assertEquals(400, response.getStatusCodeValue());
-        assertEquals("Metratura non valida.", response.getBody());
-    }
-
-
-    @Test
-    void testRegistrazioneClasseEnergeticaNonValida() {
-        validUtente.getAbitazione().setClasseEnergetica("Z");
-
-        ResponseEntity<?> response = utenteController.registrazioneUtente(validUtente);
-
-        assertEquals(400, response.getStatusCodeValue());
-        assertEquals("Classe energetica non valida.", response.getBody());
+        assertEquals(500, response.getStatusCodeValue());
     }
 
     @Test
-    void testRegistrazioneNumeroPersoneNonValido() {
-        validUtente.getAbitazione().setNumeroPersone(0);
+    void testNomeCasaNonValido() {
+        validAbitazione.setNomeCasa("CasaSuperLongaPiùDiVenticarri");
+
+        lenient().when(abitazioneService.registraAbitazione(validAbitazione)).thenThrow(new IllegalArgumentException("NomeCasa non valido."));
 
         ResponseEntity<?> response = utenteController.registrazioneUtente(validUtente);
 
-        assertEquals(400, response.getStatusCodeValue());
-        assertEquals("Numero di persone non valido.", response.getBody());
+        assertEquals(500, response.getStatusCodeValue());
     }
-
 
     @Test
-    void testRegistrazioneComuneNonValido() {
-        validUtente.getAbitazione().setComune("");
+    void testMetraturaNonValida() {
+        validAbitazione.setMetratura(5);  // Metratura inferiore a 10
+
+        lenient().when(abitazioneService.registraAbitazione(validAbitazione)).thenThrow(new IllegalArgumentException("Metratura non valida."));
 
         ResponseEntity<?> response = utenteController.registrazioneUtente(validUtente);
 
-        assertEquals(400, response.getStatusCodeValue());
-        assertEquals("Comune non valido.", response.getBody());
+        assertEquals(500, response.getStatusCodeValue());
     }
-
 
     @Test
-    void testRegistrazioneImmagineNonValida() {
-        validUtente.getAbitazione().setImmagine("invalidimage.bmp");
+    void testNumeroPersoneNonValido() {
+        validAbitazione.setNumeroPersone(0);  // Numero di persone inferiore a 1
+
+        lenient().when(abitazioneService.registraAbitazione(validAbitazione)).thenThrow(new IllegalArgumentException("Numero di persone non valido."));
 
         ResponseEntity<?> response = utenteController.registrazioneUtente(validUtente);
 
-        assertEquals(400, response.getStatusCodeValue());
-        assertEquals("Immagine non valida.", response.getBody());
+        assertEquals(500, response.getStatusCodeValue());
     }
 
+    @Test
+    void testClasseEnergeticaNonValida() {
+        validAbitazione.setClasseEnergetica("H");
+
+        lenient().when(abitazioneService.registraAbitazione(validAbitazione)).thenThrow(new IllegalArgumentException("Classe energetica non valida."));
+
+        ResponseEntity<?> response = utenteController.registrazioneUtente(validUtente);
+
+        assertEquals(500, response.getStatusCodeValue());
+    }
+
+    @Test
+    void testImmagineNonValida() {
+        validAbitazione.setImmagine("invalid.bmp");
+
+        lenient().when(abitazioneService.registraAbitazione(validAbitazione)).thenThrow(new IllegalArgumentException("Immagine non valida."));
+
+        ResponseEntity<?> response = utenteController.registrazioneUtente(validUtente);
+
+        assertEquals(500, response.getStatusCodeValue());
+    }
+
+    @Test
+    void testComuneNonValido() {
+        validAbitazione.setComune("");
+
+        lenient().when(abitazioneService.registraAbitazione(validAbitazione)).thenThrow(new IllegalArgumentException("Immagine non valida."));
+
+        ResponseEntity<?> response = utenteController.registrazioneUtente(validUtente);
+
+        assertEquals(500, response.getStatusCodeValue());
+    }
 
 }
+

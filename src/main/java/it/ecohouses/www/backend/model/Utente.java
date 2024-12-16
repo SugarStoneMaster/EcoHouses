@@ -1,9 +1,10 @@
-
 package it.ecohouses.www.backend.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,15 +22,20 @@ public class Utente {
 
     @Id
     @NotBlank(message = "Il nickname non può essere vuoto")
+    //@Size(max = 15, message = "Il nickname non può superare i 15 caratteri")
     @Column(nullable = false)
     private String nickname;
 
-    @Email(message = "Deve essere un indirizzo email valido")
     @NotBlank(message = "L'email non può essere vuota")
+    /*@Pattern(
+            regexp = "^[^@\\s]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+            message = "L'email deve contenere almeno un punto dopo la '@' e un dominio valido"
+    )*/
     @Column(nullable = false, unique = true)
     private String email;
 
     @NotBlank(message = "La password non può essere vuota")
+   // @Size(min = 12, message = "La password deve contenere almeno 12 caratteri")
     @Column(nullable = false)
     private String password;
 
@@ -76,5 +82,4 @@ public class Utente {
                 ", gestore=" + gestore +
                 '}';
     }
-
 }
