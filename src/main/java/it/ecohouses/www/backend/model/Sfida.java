@@ -41,7 +41,7 @@ public class Sfida {
     private float obiettivo;
 
     @Column(nullable = false)
-    private LocalDateTime dataScadenza;
+    private LocalDateTime dataSfida;
 
     @Column(nullable = false)
     private boolean completamento; // true = completata, false = in corso

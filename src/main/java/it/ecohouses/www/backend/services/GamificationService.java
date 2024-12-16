@@ -207,14 +207,7 @@ public class GamificationService {
                 .orElseThrow(() -> new RuntimeException("Utente non trovato: " + nickname));
         Abitazione abitazione = utente.getAbitazione();
 
-        //calcola la data di scadenza
-        LocalDateTime dataCreazione = LocalDateTime.now();
-        LocalDateTime dataScadenza = switch (durata.toUpperCase()) {
-            case "GIORNALIERA" -> dataCreazione.plusDays(1);
-            case "SETTIMANALE" -> dataCreazione.plusWeeks(1);
-            case "MENSILE" -> dataCreazione.plusMonths(1);
-            default -> throw new IllegalArgumentException("Durata non valida");
-        };
+        LocalDateTime dataCreazione= LocalDateTime.now();
 
         // Crea e salva la sfida
         Sfida sfida = new Sfida();
@@ -223,7 +216,7 @@ public class GamificationService {
         sfida.setDurata(durata);
         sfida.setPunteggio(punteggio);
         sfida.setObiettivo(obiettivo);
-        sfida.setDataScadenza(dataScadenza);
+        sfida.setDataSfida(dataCreazione);
         sfida.setCompletamento(false);
         sfida.setAbitazionePartecipante(abitazione);
 
@@ -264,13 +257,7 @@ public class GamificationService {
             float consumoCreatore = abitazioneCreatore.getConsumoTotale();
             float obiettivo = calcolaObiettivo(difficolta, durata, consumoCreatore);
 
-            //calcola la data di scadenza
             LocalDateTime dataCreazione = LocalDateTime.now();
-            LocalDateTime dataScadenza = switch (durata.toUpperCase()) {
-                case "SETTIMANALE" -> dataCreazione.plusWeeks(1);
-                case "MENSILE" -> dataCreazione.plusMonths(1);
-                default -> throw new IllegalArgumentException("Durata non valida");
-            };
 
             //crea l'id del gruppo
             Long idGruppo = UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
@@ -282,7 +269,7 @@ public class GamificationService {
             sfida.setDurata(durata);
             sfida.setPunteggio(punteggio);
             sfida.setObiettivo(obiettivo);
-            sfida.setDataScadenza(dataScadenza);
+            sfida.setDataSfida(dataCreazione);
             sfida.setCompletamento(false);
             sfida.setIdGruppo(idGruppo);
             sfida.setAttivazione(false);
@@ -322,7 +309,7 @@ public class GamificationService {
         nuovaSfida.setDurata(sfidaOriginale.getDurata());
         nuovaSfida.setPunteggio(sfidaOriginale.getPunteggio());
         nuovaSfida.setObiettivo(sfidaOriginale.getObiettivo());
-        nuovaSfida.setDataScadenza(sfidaOriginale.getDataScadenza());
+        nuovaSfida.setDataSfida(sfidaOriginale.getDataSfida());
         nuovaSfida.setCompletamento(false);
         nuovaSfida.setAbitazionePartecipante(abitazionePartecipante);
 
