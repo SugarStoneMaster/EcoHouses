@@ -39,7 +39,7 @@ class IoTControllerTest {
         smartmeter.setEmail("Palombagamer@gmail.com");
         smartmeter.setPassword("IsBestEsame");
     }
-     //Test TC_IOT_1: Codice QR valido
+     //TC_IOT_1
     @Test
     void testRegistrazioneDispositivo_ValidQRCode() {
         when(iotService.aggiungiDispositivoIoT(dispositivo)).thenReturn(dispositivo);
@@ -50,7 +50,7 @@ class IoTControllerTest {
         assertEquals(dispositivo, response.getBody());
     }
 
-    //Test TC_IOT_2: Codice QR già registrato
+    //TC_IOT_2
     @Test
     void testRegistrazioneDispositivo_QRGiàRegistrato() {
         when(iotService.aggiungiDispositivoIoT(dispositivo)).thenThrow(new IllegalArgumentException("Dispositivo già registrato."));
@@ -61,7 +61,7 @@ class IoTControllerTest {
         assertEquals("Errore durante la registrazione del dispositivo.", response.getBody());
     }
 
-    //Test TC_SM_5: Email utente errata
+    //TC_SM_5
     @Test
     void testRegistrazioneDispositivo_EmailErrata(){
 
@@ -73,7 +73,7 @@ class IoTControllerTest {
         assertEquals("Email errata", response.getBody());
     }
 
-    //Test TC_SM_6: Password utente errata
+    //TC_SM_6
     @Test
     void testRegistrazioneDispositivo_PasswordErrata(){
 

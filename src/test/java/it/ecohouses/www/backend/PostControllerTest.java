@@ -29,7 +29,7 @@ class PostControllerTest {
         post = new Post();
     }
 
-    //Test TC_S_1: Troppi caratteri durante la creazione
+    //TC_S_1
     @Test
     void testCreaPost_TextoTooLong() {
         post.setTesto("a".repeat(600));
@@ -38,7 +38,7 @@ class PostControllerTest {
       fail("Testo superiore ai 500 caratteri");
     }
 
-    //Test TC_S_2: Immagine troppo grande
+    //TC_S_2
     @Test
     void testCreaPost_ImmagineTooLarge() {
         post.setTesto("Testo valido");
@@ -47,7 +47,7 @@ class PostControllerTest {
         fail("Immagine troppo grande");
     }
 
-    //Test TC_S_3: immagine non supportata
+    //TC_S_3
     @Test
     void testCreaPost_ImmagineNonSupportata() {
         post.setTesto("Testo valido");
@@ -57,7 +57,7 @@ class PostControllerTest {
        fail("Immagine non supportata");
     }
 
-    //Test TC_S_4: tutti i dati inseriti sono validi
+    //TC_S_4
     @Test
     void testCreaPost_Valid() {
         // Simula un post valido
@@ -70,4 +70,5 @@ class PostControllerTest {
         assertEquals(200, response.getStatusCodeValue());
         assertNotNull(response.getBody());
     }
+
 }

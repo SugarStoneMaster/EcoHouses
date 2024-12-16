@@ -54,14 +54,16 @@ class UtenteControllerTest {
         validUtente.setAbitazione(validAbitazione);
     }
 
-    @Test //TC_RG_1
+    //TC_R_1
+    @Test
     void testGestoreValido(){
 
         ResponseEntity<Map<String, Object>>  response = utenteController.registrazioneUtente(validUtente);
         assertEquals(201, response.getStatusCodeValue());
     }
 
-    @Test //TC_RG_2
+    //TC_R_2
+    @Test
     void testEmailNonValida() {
         validUtente.setEmail("invalidEmail");
 
@@ -71,7 +73,8 @@ class UtenteControllerTest {
         assertEquals(500, response.getStatusCodeValue());
     }
 
-    @Test //TC_RG_2
+    //TC_R_2
+    @Test
     void testEmailGiaInUso() {
         validUtente.setEmail("invalidEmail");
 
@@ -81,8 +84,8 @@ class UtenteControllerTest {
         assertEquals(500, response.getStatusCodeValue());
     }
 
-
-    @Test //TC_RG_3
+    //TC_R_3
+    @Test
     void testPasswordNonValida() {
         validUtente.setPassword("short");
 
@@ -93,7 +96,8 @@ class UtenteControllerTest {
         assertEquals(500, response.getStatusCodeValue());
     }
 
-    @Test //TC_RG_5
+    //TC_R_5
+    @Test
     void testNicknameNonValido() {
         validUtente.setNickname("short");
 
@@ -104,7 +108,8 @@ class UtenteControllerTest {
         assertEquals(500, response.getStatusCodeValue());
     }
 
-    @Test //TC_RG_5
+    //TC_R_5
+    @Test
     void testRegistrazioneNicknameGiaInUso() {
         validUtente.setNickname("existingNickname");
         // Simuliamo che il nickname sia già esistente nel database nel servizio
@@ -116,7 +121,8 @@ class UtenteControllerTest {
         // Verifica che il messaggio di errore sia corretto
     }
 
-    @Test //TC_RG_6
+    //TC_R_6
+    @Test
     void testRuoloNonValido() {
         validUtente.setGestore(false);  // Ruolo invalido
 
@@ -127,7 +133,8 @@ class UtenteControllerTest {
         assertEquals(500, response.getStatusCodeValue());
     }
 
-    @Test //TC_RG_7
+    //TC_R_7
+    @Test
     void testNomeCasaNonValido() {
         validAbitazione.setNomeCasa("CasaSuperLongaPiùDiVenticarri");
 
@@ -138,7 +145,8 @@ class UtenteControllerTest {
         assertEquals(500, response.getStatusCodeValue());
     }
 
-    @Test //TC_RG_9
+    //TC_R_8
+    @Test
     void testMetraturaNonValida() {
         validAbitazione.setMetratura(5);  // Metratura inferiore a 10
 
@@ -149,39 +157,7 @@ class UtenteControllerTest {
         assertEquals(500, response.getStatusCodeValue());
     }
 
-    @Test //TC_RG_10
-    void testNumeroPersoneNonValido() {
-        validAbitazione.setNumeroPersone(0);  // Numero di persone inferiore a 1
-
-        lenient().when(abitazioneService.registraAbitazione(validAbitazione)).thenThrow(new IllegalArgumentException("Numero di persone non valido."));
-
-        ResponseEntity<?> response = utenteController.registrazioneUtente(validUtente);
-
-        assertEquals(500, response.getStatusCodeValue());
-    }
-
-    @Test //TC_RG_11
-    void testClasseEnergeticaNonValida() {
-        validAbitazione.setClasseEnergetica("H");
-
-        lenient().when(abitazioneService.registraAbitazione(validAbitazione)).thenThrow(new IllegalArgumentException("Classe energetica non valida."));
-
-        ResponseEntity<?> response = utenteController.registrazioneUtente(validUtente);
-
-        assertEquals(500, response.getStatusCodeValue());
-    }
-
-    @Test //TC_RG_12
-    void testImmagineNonValida() {
-        validAbitazione.setImmagine("invalid.bmp");
-
-        lenient().when(abitazioneService.registraAbitazione(validAbitazione)).thenThrow(new IllegalArgumentException("Immagine non valida."));
-
-        ResponseEntity<?> response = utenteController.registrazioneUtente(validUtente);
-
-        assertEquals(500, response.getStatusCodeValue());
-    }
-
+    //TC_R_9
     @Test
     void testComuneNonValido() {
         validAbitazione.setComune("");
@@ -192,6 +168,44 @@ class UtenteControllerTest {
 
         assertEquals(500, response.getStatusCodeValue());
     }
+
+    //TC_R_10
+    @Test
+    void testNumeroPersoneNonValido() {
+        validAbitazione.setNumeroPersone(0);  // Numero di persone inferiore a 1
+
+        lenient().when(abitazioneService.registraAbitazione(validAbitazione)).thenThrow(new IllegalArgumentException("Numero di persone non valido."));
+
+        ResponseEntity<?> response = utenteController.registrazioneUtente(validUtente);
+
+        assertEquals(500, response.getStatusCodeValue());
+    }
+
+    //TC_R_11
+    @Test
+    void testClasseEnergeticaNonValida() {
+        validAbitazione.setClasseEnergetica("H");
+
+        lenient().when(abitazioneService.registraAbitazione(validAbitazione)).thenThrow(new IllegalArgumentException("Classe energetica non valida."));
+
+        ResponseEntity<?> response = utenteController.registrazioneUtente(validUtente);
+
+        assertEquals(500, response.getStatusCodeValue());
+    }
+
+    //TC_R_12
+    @Test
+    void testImmagineNonValida() {
+        validAbitazione.setImmagine("invalid.bmp");
+
+        lenient().when(abitazioneService.registraAbitazione(validAbitazione)).thenThrow(new IllegalArgumentException("Immagine non valida."));
+
+        ResponseEntity<?> response = utenteController.registrazioneUtente(validUtente);
+
+        assertEquals(500, response.getStatusCodeValue());
+    }
+
+
 
 }
 

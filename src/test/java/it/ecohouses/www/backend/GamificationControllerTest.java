@@ -33,6 +33,7 @@ class GamificationControllerTest {
         gamificationController = new GamificationController(gamificationService);
     }
 
+    //TC_G2_1
     @Test
     void testGetClassificaLocaleValid() {
         String nickname = "utente1";
@@ -53,6 +54,7 @@ class GamificationControllerTest {
         assertTrue(responseBody.containsKey("statistiche dell'utente"));
     }
 
+    //TC_G2_2
     @Test
     void testGetClassificaLocaleNoTop100() {
         String nickname = "utente2";
@@ -73,6 +75,7 @@ class GamificationControllerTest {
         assertTrue(responseBody.containsKey("statistiche dell'utente"));
     }
 
+    //TC_G2_3
     @Test
     void testGetClassificaLocaleNoData() {
         String nickname = "utente3";
@@ -86,7 +89,7 @@ class GamificationControllerTest {
         assertEquals("La classifica non è al momento disponibile. Riprova più tardi.", response.getBody());
     }
 
-
+    //TC_G2_4
     @Test
     void testGetClassificaLocaleNoOtherUsers() {
         String nickname = "utente4";
@@ -102,6 +105,7 @@ class GamificationControllerTest {
         assertTrue(response.getBody().toString().contains("Non ci sono altri utenti nella classifica."));
     }
 
+    //TC_G1_1
     @Test
     void testCreaSfidaDiGruppoValidDT1DL1() {
         Map<String, Object> richiesta = Map.of(
@@ -125,6 +129,7 @@ class GamificationControllerTest {
         assertEquals("FACILE", sfida.getDifficolta());
     }
 
+    //TC_G1_2
     @Test
     void testCreaSfidaDiGruppoValidDT1DL2() {
         Map<String, Object> richiesta = Map.of(
@@ -148,6 +153,7 @@ class GamificationControllerTest {
         assertEquals("MEDIA", sfida.getDifficolta());
     }
 
+    //TC_G1_3
     @Test
     void testCreaSfidaDiGruppoValidDT1DL3() {
         Map<String, Object> richiesta = Map.of(
@@ -171,6 +177,7 @@ class GamificationControllerTest {
         assertEquals("DIFFICILE", sfida.getDifficolta());
     }
 
+    //TC_G1_4
     @Test
     void testCreaSfidaDiGruppoValidDT2DL1() {
         Map<String, Object> richiesta = Map.of(
@@ -194,6 +201,7 @@ class GamificationControllerTest {
         assertEquals("FACILE", sfida.getDifficolta());
     }
 
+    //TC_G1_5
     @Test
     void testCreaSfidaDiGruppoValidDT2DL2() {
         Map<String, Object> richiesta = Map.of(
@@ -217,6 +225,7 @@ class GamificationControllerTest {
         assertEquals("MEDIA", sfida.getDifficolta());
     }
 
+    //TC_G1_6
     @Test
     void testCreaSfidaDiGruppoValidDT2DL3() {
         Map<String, Object> richiesta = Map.of(
@@ -240,6 +249,7 @@ class GamificationControllerTest {
         assertEquals("DIFFICILE", sfida.getDifficolta());
     }
 
+    //TC_G1_7
     @Test
     void testCreaSfidaDiGruppoErroreLivelloDifficoltàNonSelezionato() {
         Map<String, Object> richiesta = Map.of(
@@ -254,6 +264,7 @@ class GamificationControllerTest {
         assertEquals(400, response.getStatusCodeValue());
     }
 
+    //TC_G1_8
     @Test
     void testCreaSfidaDiGruppoErroreTipoDurataNonSelezionato() {
         Map<String, Object> richiesta = Map.of(
@@ -268,6 +279,7 @@ class GamificationControllerTest {
         assertEquals(400, response.getStatusCodeValue());
     }
 
+    //TC_G1_9
     @Test
     void testCreaSfidaDiGruppoErroreNumeroPartecipntiNonValido() {
         Map<String, Object> richiesta = Map.of(
